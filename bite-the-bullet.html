@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bite the Bullet - Roll20 Character Sheet</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== BITE THE BULLET ROLL20 CHARACTER SHEET STYLES ===== */
+        
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #f4f1e8 0%, #e8dcc0 100%);
+            color: #2c1810;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        /* Typography */
+        h3, h4 {
+            font-family: 'Cinzel', serif;
+            color: #8b4513;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 5px;
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        /* Form Elements */
+        input, textarea, select, button {
+            font-family: 'Crimson Text', serif;
+            border: 1px solid #8b4513;
+            border-radius: 4px;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c1810;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #a0522d;
+            box-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
+            background: white;
+        }
+        
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+        }
+        
+        input[type="text"] {
+            min-width: 120px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            width: 100%;
+        }
+        
+        /* Buttons */
+        button {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+            background: linear-gradient(135deg, #a0522d, #cd853f);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(139, 69, 19, 0.3);
+        }
+        
+        /* Layout Sections */
+        .sheet-header {
+            background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(160,82,45,0.1));
+            border: 2px solid #8b4513;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .character-name-section, .player-name-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .character-name-section input, .player-name-section input {
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px;
+        }
+        
+        /* Character Generator */
+        .character-generator {
+            background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(160,82,45,0.1));
+            border: 2px solid #8b4513;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-generate-all {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .btn-generate-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(139,69,19,0.3);
+        }
+        
+        .generator-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .generator-options button {
+            background: #8b4513;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        
+        .generator-options button:hover {
+            background: #a0522d;
+        }
+        
+        .name-generator {
+            border-top: 1px solid #8b4513;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .name-generator button {
+            margin: 5px;
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        
+        .name-suggestions {
+            display: grid;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .name-suggestions input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #8b4513;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            color: #2c1810;
+        }
+        
+        /* Main Sheet Layout */
+        .sheet-main {
+            display: grid;
+            gap: 20px;
+        }
+        
+        /* Attributes Section */
+        .attributes-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .attribute {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .attribute label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #8b4513;
+        }
+        
+        .attribute input {
+            font-size: 18px;
+            font-weight: bold;
+            width: 80px;
+            margin-bottom: 10px;
+        }
+        
+        .attribute button {
+            width: 100%;
+            padding: 8px;
+            font-size: 12px;
+        }
+        
+        .sand-display {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Resources Section */
+        .resources-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .resource {
+            text-align: center;
+        }
+        
+        .resource label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #8b4513;
+        }
+        
+        .resource input {
+            width: 80px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        /* Characteristics Section */
+        .characteristics-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .characteristics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .characteristic {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            padding: 12px;
+        }
+        
+        .characteristic h4 {
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .characteristic input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .characteristic-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 40px;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .characteristic-controls label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .characteristic-controls input {
+            width: 50px;
+        }
+        
+        .tap-btn {
+            background: linear-gradient(135deg, #228b22, #32cd32);
+            font-size: 11px;
+            padding: 6px;
+        }
+        
+        .advance-btn {
+            background: linear-gradient(135deg, #4169e1, #6495ed);
+            font-size: 14px;
+            font-weight: bold;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+        
+        .characteristic button[type="roll"] {
+            width: 100%;
+            font-size: 12px;
+            padding: 6px;
+        }
+        
+        /* Repeating Sections */
+        .repeating_weapons, .repeating_gear, .repeating_burdens, .repeating_npcs {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        
+        /* Weapons Section */
+        .weapons-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .weapon-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .weapon-details, .weapon-ammo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .weapon-details label, .weapon-ammo label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .weapon-traits {
+            margin-bottom: 10px;
+        }
+        
+        .weapon-traits label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Armor Section */
+        .armor-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .armor-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .armor-details label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Gear Section */
+        .gear-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .gear-item {
+            display: grid;
+            grid-template-columns: 2fr auto 1fr;
+            gap: 10px;
+            align-items: start;
+        }
+        
+        /* Burdens Section */
+        .burdens-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .burden-item {
+            display: grid;
+            grid-template-columns: 2fr auto auto 1fr;
+            gap: 10px;
+            align-items: start;
+        }
+        
+        /* Acts of Faith Section */
+        .faith-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .faith-scale {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .faith-scale ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .faith-scale li {
+            margin-bottom: 8px;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+        
+        .faith-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        /* NPC Section */
+        .npc-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .npc-importer {
+            background: rgba(139, 69, 19, 0.05);
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .npc-importer textarea {
+            width: 100%;
+            min-height: 80px;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .npc-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .npc-attributes, .npc-armor, .npc-attack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .npc-attributes label, .npc-armor label, .npc-attack label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .npc-notes {
+            margin-top: 10px;
+        }
+        
+        .npc-notes label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+            }
+            
+            .sheet-header {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .character-generator {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .generator-options {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .btn-generate-all {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .characteristics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .characteristic-controls {
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+            }
+            
+            .weapon-details, .weapon-ammo {
+                grid-template-columns: 1fr;
+            }
+            
+            .armor-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .gear-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .burden-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .faith-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .npc-attributes, .npc-armor, .npc-attack {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Touch-friendly interface */
+        @media (max-width: 768px) {
+            button, input[type="button"], input[type="submit"] {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 10px;
+            }
+            
+            input, textarea, select {
+                padding: 10px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+        
+        /* Dark theme support */
+        .sheet-dark {
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f08 100%);
+            color: #e6e6e6;
+        }
+        
+        .sheet-dark .character-generator,
+        .sheet-dark .attributes-section,
+        .sheet-dark .resources-section,
+        .sheet-dark .characteristics-section,
+        .sheet-dark .weapons-section,
+        .sheet-dark .armor-section,
+        .sheet-dark .gear-section,
+        .sheet-dark .burdens-section,
+        .sheet-dark .faith-section,
+        .sheet-dark .npc-section {
+            background: rgba(255, 178, 87, 0.1);
+            border-color: #ffb257;
+            color: #e6e6e6;
+        }
+        
+        .sheet-dark .btn-generate-all {
+            background: linear-gradient(135deg, #ffb257, #ffd08a);
+            color: #1a1a1a;
+        }
+        
+        .sheet-dark input, 
+        .sheet-dark textarea, 
+        .sheet-dark select {
+            background: rgba(44, 24, 16, 0.8);
+            border-color: #ffb257;
+            color: #e6e6e6;
+        }
+        
+        .sheet-dark input:focus, 
+        .sheet-dark textarea:focus, 
+        .sheet-dark select:focus {
+            background: rgba(44, 24, 16, 0.9);
+            border-color: #ffd08a;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Roll20 Character Sheet for Bite the Bullet RPG -->
+    
+    <!-- Character Header -->
+    <div class="sheet-header">
+        <div class="character-name-section">
+            <label for="attr_character_name">Character Name:</label>
+            <input name="attr_character_name" type="text" placeholder="Enter character name" />
+        </div>
+        
+        <div class="player-name-section">
+            <label for="attr_player_name">Player Name:</label>
+            <input name="attr_player_name" type="text" placeholder="Enter player name" />
+        </div>
+    </div>
+
+    <!-- Character Generator Section -->
+    <div class="character-generator">
+        <h3>🤠 Bite the Bullet Character Generator</h3>
+        
+        <button type="action" name="act_generate_character" class="btn-generate-all">
+            🎲 Generate Complete Character
+        </button>
+        
+        <div class="generator-options">
+            <button type="action" name="act_generate_attributes">🎲 Roll Attributes</button>
+            <button type="action" name="act_generate_characteristics">📜 Roll Characteristics</button>
+            <button type="action" name="act_generate_equipment">⚔️ Generate Equipment</button>
+            <button type="action" name="act_generate_name">🤠 Generate Name</button>
+        </div>
+        
+        <div class="name-generator">
+            <h4>Wild West Name Options</h4>
+            <button type="action" name="act_generate_male_name">Male Names</button>
+            <button type="action" name="act_generate_female_name">Female Names</button>
+            <button type="action" name="act_generate_random_name">Random Gender</button>
+            
+            <div class="name-suggestions">
+                <input name="attr_name_suggestion_1" type="text" readonly placeholder="Generated name option 1" />
+                <input name="attr_name_suggestion_2" type="text" readonly placeholder="Generated name option 2" />
+                <input name="attr_name_suggestion_3" type="text" readonly placeholder="Generated name option 3" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Character Sheet -->
+    <div class="sheet-main">
+        
+        <!-- Attributes Section -->
+        <div class="attributes-section">
+            <h3>Attributes</h3>
+            <div class="attributes-grid">
+                <div class="attribute">
+                    <label for="attr_vigor">Vigor (3d6)</label>
+                    <input name="attr_vigor" type="number" value="10" min="3" max="18" />
+                    <button type="roll" name="roll_vigor_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Vigor}} {{base_roll=[[1d20]]}} {{target=@{vigor}}} {{attribute=vigor}}">Vigor Save</button>
+                </div>
+                
+                <div class="attribute">
+                    <label for="attr_presence">Presence (3d6)</label>
+                    <input name="attr_presence" type="number" value="10" min="3" max="18" />
+                    <button type="roll" name="roll_presence_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Presence}} {{base_roll=[[1d20]]}} {{target=@{presence}}} {{attribute=presence}}">Presence Save</button>
+                </div>
+                
+                <div class="attribute">
+                    <label for="attr_faith">Faith (3d6)</label>
+                    <input name="attr_faith" type="number" value="10" min="3" max="18" />
+                    <button type="roll" name="roll_faith_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Faith}} {{base_roll=[[1d20]]}} {{target=@{faith}}} {{attribute=faith}}">Faith Save</button>
+                </div>
+                
+                <div class="attribute">
+                    <label for="attr_sand">Sand (2d6)</label>
+                    <input name="attr_sand" type="number" value="7" min="2" max="12" />
+                    <input name="attr_sand_current" type="number" value="7" min="0" />
+                    <span class="sand-display">Current: <span name="attr_sand_current"></span> / Max: <span name="attr_sand"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-section">
+            <h3>Resources</h3>
+            <div class="resources-grid">
+                <div class="resource">
+                    <label for="attr_load">Load</label>
+                    <input name="attr_load" type="number" value="0" readonly />
+                </div>
+                
+                <div class="resource">
+                    <label for="attr_inventory">Inventory</label>
+                    <input name="attr_inventory" type="number" value="10" readonly />
+                </div>
+                
+                <div class="resource">
+                    <label for="attr_reserve">Reserve</label>
+                    <input name="attr_reserve" type="number" value="10" readonly />
+                </div>
+                
+                <div class="resource">
+                    <label for="attr_lead">Lead</label>
+                    <input name="attr_lead" type="number" value="0" min="0" />
+                </div>
+                
+                <div class="resource">
+                    <label for="attr_money">Money</label>
+                    <input name="attr_money" type="number" value="0" min="0" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Characteristics Section -->
+        <div class="characteristics-section">
+            <h3>Characteristics</h3>
+            <div class="characteristics-grid">
+                
+                <div class="characteristic">
+                    <h4>Background</h4>
+                    <input name="attr_background_name" type="text" placeholder="Background name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_background_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_background_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_background" class="tap-btn">Tap (+<span name="attr_background_rank"></span>)</button>
+                        <button type="action" name="act_advance_background" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_background_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Background}} {{roll=[[1d10]]}}">🎲 Roll Background</button>
+                </div>
+                
+                <div class="characteristic">
+                    <h4>Reputation</h4>
+                    <input name="attr_reputation_name" type="text" placeholder="Reputation name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_reputation_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_reputation_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_reputation" class="tap-btn">Tap (+<span name="attr_reputation_rank"></span>)</button>
+                        <button type="action" name="act_advance_reputation" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_reputation_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Reputation}} {{roll=[[1d10]]}}">🎲 Roll Reputation</button>
+                </div>
+                
+                <div class="characteristic">
+                    <h4>Fortitude</h4>
+                    <input name="attr_fortitude_name" type="text" placeholder="Fortitude name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_fortitude_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_fortitude_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_fortitude" class="tap-btn">Tap (+<span name="attr_fortitude_rank"></span>)</button>
+                        <button type="action" name="act_advance_fortitude" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_fortitude_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Fortitude}} {{roll=[[1d10]]}}">🎲 Roll Fortitude</button>
+                </div>
+                
+                <div class="characteristic">
+                    <h4>Foible</h4>
+                    <input name="attr_foible_name" type="text" placeholder="Foible name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_foible_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_foible_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_foible" class="tap-btn">Tap (+<span name="attr_foible_rank"></span>)</button>
+                        <button type="action" name="act_advance_foible" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_foible_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Foible}} {{roll=[[1d10]]}}">🎲 Roll Foible</button>
+                </div>
+                
+                <div class="characteristic">
+                    <h4>Issue</h4>
+                    <input name="attr_issue_name" type="text" placeholder="Issue name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_issue_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_issue_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_issue" class="tap-btn">Tap (+<span name="attr_issue_rank"></span>)</button>
+                        <button type="action" name="act_advance_issue" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_issue_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Issue}} {{roll=[[1d10]]}}">🎲 Roll Issue</button>
+                </div>
+                
+                <div class="characteristic">
+                    <h4>The Bond</h4>
+                    <input name="attr_bond_name" type="text" placeholder="Bond name" />
+                    <div class="characteristic-controls">
+                        <label>Rank: <input name="attr_bond_rank" type="number" value="1" min="1" max="6" /></label>
+                        <label>Uses: <input name="attr_bond_uses" type="number" value="0" min="0" /></label>
+                        <button type="action" name="act_tap_bond" class="tap-btn">Tap (+<span name="attr_bond_rank"></span>)</button>
+                        <button type="action" name="act_advance_bond" class="advance-btn">+</button>
+                    </div>
+                    <button type="roll" name="roll_bond_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Bond}} {{roll=[[1d4]]}}">🎲 Roll Bond</button>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Weapons Section -->
+        <div class="weapons-section">
+            <h3>Weapons</h3>
+            <fieldset class="repeating_weapons">
+                <div class="weapon-header">
+                    <input name="attr_weapon_name" type="text" placeholder="Weapon name" />
+                    <button type="roll" name="roll_weapon_attack" value="&{template:damage} {{character_name=@{character_name}}} {{weapon_name=@{weapon_name}}} {{damage=[[@{weapon_damage}]]}} {{current_shots=@{weapon_current_shots}}} {{max_shots=@{weapon_shots}}}">Attack</button>
+                </div>
+                
+                <div class="weapon-details">
+                    <label>Damage: <input name="attr_weapon_damage" type="text" value="1d6" /></label>
+                    <label>Range: <input name="attr_weapon_range" type="text" placeholder="Close/Medium/Long" /></label>
+                    <label>Slots: <input name="attr_weapon_slots" type="number" value="1" min="0" /></label>
+                </div>
+                
+                <div class="weapon-ammo">
+                    <label>Shots: <input name="attr_weapon_shots" type="number" value="6" min="0" /></label>
+                    <label>Current: <input name="attr_weapon_current_shots" type="number" value="6" min="0" /></label>
+                    <button type="action" name="act_weapon_reload">Reload (1 Lead)</button>
+                </div>
+                
+                <div class="weapon-traits">
+                    <label>Traits: <input name="attr_weapon_traits" type="text" placeholder="AoE, Melee, etc." /></label>
+                </div>
+            </fieldset>
+            
+            <button type="roll" name="roll_weapon_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Weapons}} {{roll=[[1d8]]}}">🎲 Roll Random Weapon</button>
+        </div>
+
+        <!-- Armor Section -->
+        <div class="armor-section">
+            <h3>Armor</h3>
+            <div class="armor-details">
+                <label>Armor Name: <input name="attr_armor_name" type="text" placeholder="Armor name" /></label>
+                <label>Physical Armor: <input name="attr_armor_physical" type="number" value="0" min="0" /></label>
+                <label>Social Armor: <input name="attr_armor_social" type="number" value="0" min="0" /></label>
+                <label>Faith Armor: <input name="attr_armor_faith" type="number" value="0" min="0" /></label>
+                <label>Slots: <input name="attr_armor_slots" type="number" value="1" min="0" /></label>
+                <label>Description: <textarea name="attr_armor_description" placeholder="Armor description"></textarea></label>
+            </div>
+            
+            <button type="roll" name="roll_armor_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Armor}} {{roll=[[1d5]]}}">🎲 Roll Random Armor</button>
+        </div>
+
+        <!-- Gear Section -->
+        <div class="gear-section">
+            <h3>Gear</h3>
+            <fieldset class="repeating_gear">
+                <div class="gear-item">
+                    <input name="attr_gear_name" type="text" placeholder="Gear name" />
+                    <input name="attr_gear_slots" type="number" value="1" min="0" placeholder="Slots" />
+                    <textarea name="attr_gear_description" placeholder="Description"></textarea>
+                </div>
+            </fieldset>
+            
+            <button type="roll" name="roll_gear_table" value="&{template:table-roll} {{character_name=@{character_name}}} {{table_name=Gear}} {{roll=[[1d20]]}}">🎲 Roll Random Gear</button>
+        </div>
+
+        <!-- Burdens/Status Effects Section -->
+        <div class="burdens-section">
+            <h3>Burdens & Status Effects</h3>
+            <fieldset class="repeating_burdens">
+                <div class="burden-item">
+                    <input name="attr_burden_name" type="text" placeholder="Burden/Status name" />
+                    <input name="attr_burden_slots" type="number" value="1" min="0" placeholder="Slots" />
+                    <select name="attr_burden_type">
+                        <option value="physical">Physical</option>
+                        <option value="social">Social</option>
+                        <option value="faith">Faith</option>
+                        <option value="status">Status Effect</option>
+                    </select>
+                    <textarea name="attr_burden_description" placeholder="Description and effects"></textarea>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Acts of Faith Section -->
+        <div class="faith-section">
+            <h3>Acts of Faith</h3>
+            <div class="faith-scale">
+                <h4>Faith Scale Reference</h4>
+                <ul>
+                    <li><strong>Trivial (0 Reserve, +0):</strong> Light candle, hear whisper, feel presence</li>
+                    <li><strong>Minor (1 Reserve, -1):</strong> Bless food/water, calm fear, detect spirits</li>
+                    <li><strong>Moderate (2 Reserve, -2):</strong> Heal attributes (d6), repel spirits, vision</li>
+                    <li><strong>Major (3 Reserve, -3):</strong> Banish creature, call down fire (d6 AoE)</li>
+                    <li><strong>Legendary (4+ Reserve, Special):</strong> Bring back from grave, stop time</li>
+                </ul>
+            </div>
+            
+            <div class="faith-controls">
+                <button type="roll" name="roll_faith_trivial" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Trivial}} {{reserve_req=0}} {{modifier=0}} {{roll=[[1d20]]}} {{target=@{faith}}}">Trivial Act</button>
+                <button type="roll" name="roll_faith_minor" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Minor}} {{reserve_req=1}} {{modifier=-1}} {{roll=[[1d20-1]]}} {{target=@{faith}}}">Minor Act</button>
+                <button type="roll" name="roll_faith_moderate" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Moderate}} {{reserve_req=2}} {{modifier=-2}} {{roll=[[1d20-2]]}} {{target=@{faith}}}">Moderate Act</button>
+                <button type="roll" name="roll_faith_major" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Major}} {{reserve_req=3}} {{modifier=-3}} {{roll=[[1d20-3]]}} {{target=@{faith}}}">Major Act</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NPC Section (GM Only) -->
+    <div class="npc-section">
+        <h3>NPC Management</h3>
+        
+        <!-- NPC Importer -->
+        <div class="npc-importer">
+            <h4>NPC Importer (JSON)</h4>
+            <textarea name="attr_npc_import_json" placeholder='[{"name": "Bear", "attributes": {"vigor": 16, "presence": 6, "faith": 3, "sand": 12}, "attacks": [{"name": "Claw", "damage": "1d6"}], "armor": {"physical": 0, "social": 0, "faith": 0}}]'></textarea>
+            <button type="action" name="act_import_npcs">Import NPCs</button>
+        </div>
+        
+        <!-- Repeating NPCs -->
+        <fieldset class="repeating_npcs">
+            <div class="npc-header">
+                <input type="text" name="attr_npc_name" placeholder="NPC Name" />
+                <button type="roll" name="roll_npc_attack" value="&{template:npc-attack} {{name=@{npc_name}}} {{attack=@{npc_attack_name}}} {{damage=[[@{npc_attack_damage}]]}}">Attack</button>
+            </div>
+            
+            <div class="npc-attributes">
+                <label>Vigor: <input type="number" name="attr_npc_vigor" placeholder="10" /></label>
+                <label>Presence: <input type="number" name="attr_npc_presence" placeholder="10" /></label>
+                <label>Faith: <input type="number" name="attr_npc_faith" placeholder="10" /></label>
+                <label>Sand: <input type="number" name="attr_npc_sand" placeholder="6" /></label>
+            </div>
+            
+            <div class="npc-armor">
+                <label>Physical Armor: <input type="number" name="attr_npc_armor_physical" placeholder="0" /></label>
+                <label>Social Armor: <input type="number" name="attr_npc_armor_social" placeholder="0" /></label>
+                <label>Faith Armor: <input type="number" name="attr_npc_armor_faith" placeholder="0" /></label>
+            </div>
+            
+            <div class="npc-attack">
+                <label>Attack Name: <input type="text" name="attr_npc_attack_name" placeholder="Attack" /></label>
+                <label>Damage: <input type="text" name="attr_npc_attack_damage" placeholder="1d6" /></label>
+            </div>
+            
+            <div class="npc-notes">
+                <label>Notes: <textarea name="attr_npc_notes" placeholder="NPC notes and traits"></textarea></label>
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- Roll Templates -->
+    
+    <!-- Damage Roll Template -->
+    <rolltemplate class="sheet-rolltemplate-damage">
+        <div class="template-container">
+            <div class="header">{{character_name}} - Physical Damage</div>
+            <div class="formula">Formula: {{formula}}</div>
+            {{#tap_bonus}}
+            <div class="tap-bonus">Tap Bonus: +{{tap_bonus}} ({{tapped_char}})</div>
+            {{/tap_bonus}}
+            <div class="damage">{{damage}}</div>
+            {{#ammunition}}
+            <div class="ammo">{{weapon_name}}: {{current}}/{{max}} shots remaining</div>
+            {{/ammunition}}
+            {{#targets}}
+            <div class="targets">Targets: {{targets}}</div>
+            {{/targets}}
+        </div>
+    </rolltemplate>
+
+    <!-- Tap Result Template -->
+    <rolltemplate class="sheet-rolltemplate-tap">
+        <div class="template-container">
+            <div class="header">{{character_name}} - Characteristic Tap</div>
+            <div class="characteristic">Characteristic: {{characteristic}} (Rank {{rank}})</div>
+            <div class="bonus">Bonus: +{{bonus}}</div>
+            <div class="uses">Uses: {{uses}}/{{max_uses}}</div>
+            {{#advancement_ready}}
+            <div class="advancement-ready">Ready for Advancement! Click the + icon to attempt rank advancement.</div>
+            {{/advancement_ready}}
+        </div>
+    </rolltemplate>
+
+    <!-- Save Roll Template -->
+    <rolltemplate class="sheet-rolltemplate-save">
+        <div class="template-container">
+            <div class="header">{{character_name}} - {{save_type}} Save</div>
+            <div class="base-roll">Base Roll: {{base_roll}}</div>
+            {{#tap_mitigation}}
+            <div class="tap-mitigation">Tap Mitigation: -{{tap_mitigation}} ({{tapped_char}})</div>
+            {{/tap_mitigation}}
+            <div class="final-roll">Final Roll: {{final_roll}} vs Target: {{target}}</div>
+            <div class="roll-result {{result_class}}">
+                <div class="result">{{result_text}}</div>
+            </div>
+        </div>
+    </rolltemplate>
+
+    <!-- Faith Act Template -->
+    <rolltemplate class="sheet-rolltemplate-faith">
+        <div class="template-container">
+            <div class="header">{{character_name}} - Act of Faith ({{scale}})</div>
+            <div class="reserve-req">Reserve Required: {{reserve_req}}</div>
+            <div class="modifier">Modifier: {{modifier}}</div>
+            <div class="roll-result">Roll: {{roll}} vs Target: {{target}}</div>
+            {{#success}}
+            <div class="success">SUCCESS! The act of faith manifests.</div>
+            {{/success}}
+            {{#failure}}
+            <div class="failure">FAILURE! Take {{damage}} damage.</div>
+            {{/failure}}
+        </div>
+    </rolltemplate>
+
+    <!-- NPC Attack Template -->
+    <rolltemplate class="sheet-rolltemplate-npc-attack">
+        <div class="template-container">
+            <div class="header">{{name}} — {{attack}}</div>
+            <div class="damage">Damage: {{damage}}</div>
+        </div>
+    </rolltemplate>
+
+    <!-- Table Roll Template -->
+    <rolltemplate class="sheet-rolltemplate-table-roll">
+        <div class="template-container">
+            <div class="header">{{character_name}} - {{table_name}} Table</div>
+            <div class="roll-result">Roll: {{roll}}</div>
+            <div class="table-result">{{result}}</div>
+        </div>
+    </rolltemplate>
+
+    <!-- Roll Template Styles -->
+    <style>
+        .sheet-rolltemplate-damage .template-container,
+        .sheet-rolltemplate-tap .template-container,
+        .sheet-rolltemplate-save .template-container,
+        .sheet-rolltemplate-faith .template-container,
+        .sheet-rolltemplate-npc-attack .template-container,
+        .sheet-rolltemplate-table-roll .template-container {
+            background: rgba(139, 69, 19, 0.1);
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Cinzel', serif;
+            margin: 5px 0;
+        }
+
+        .sheet-rolltemplate-damage .header,
+        .sheet-rolltemplate-tap .header,
+        .sheet-rolltemplate-save .header,
+        .sheet-rolltemplate-faith .header,
+        .sheet-rolltemplate-npc-attack .header,
+        .sheet-rolltemplate-table-roll .header {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b4513;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .sheet-rolltemplate-damage .damage {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8b4513;
+            text-align: center;
+            background: rgba(139, 69, 19, 0.2);
+            border-radius: 4px;
+            padding: 8px;
+            margin: 8px 0;
+        }
+
+        .sheet-rolltemplate-save .roll-result.success,
+        .sheet-rolltemplate-faith .success {
+            color: #2d5016;
+            font-weight: bold;
+        }
+
+        .sheet-rolltemplate-save .roll-result.failure,
+        .sheet-rolltemplate-faith .failure {
+            color: #8b0000;
+            font-weight: bold;
+        }
+
+        .sheet-rolltemplate-npc-attack .damage {
+            font-size: 18px;
+            text-align: center;
+            color: #8b4513;
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- JavaScript Sheet Workers -->
+    <script type="text/worker">
+        // ===== BITE THE BULLET ROLL20 SHEET WORKERS =====
+        
+        // Utility Functions
+        function rollDice(count, sides) {
+            let total = 0;
+            for (let i = 0; i < count; i++) {
+                total += Math.floor(Math.random() * sides) + 1;
+            }
+            return total;
+        }
+        
+        function getRandomFromArray(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+        
+        function generateRowID() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+        
+        // Character Generation Data
+        const characteristicTables = {
+            background: [
+                "Mine-born", "Drifter", "Ex-preacher", "Scout", "Homesteader", 
+                "Sharpshooter", "Dustmarshal's whelp", "Salt flat smuggler", 
+                "Gun pit fighter", "Rustwalker"
+            ],
+            reputation: [
+                "Shot Wyatt at sundown", "Hex-touched", "Burned a town down", 
+                "Old hand", "Cold-eyed killer", "Broken man", "Witch's favor", 
+                "Last of the line", "Silver-tongued devil", "Died once"
+            ],
+            fortitude: [
+                "Justice above all", "The old ways", "Blood oath", "Grace under fire", 
+                "Work is worth", "Don't look back", "Protect the weak", "Owe a debt", 
+                "Survive, always", "Faith in something"
+            ],
+            foible: [
+                "Short fuse", "Drinks to forget", "Can't let go", "Bleeds for strangers", 
+                "Never backs down", "Haunted by dreams", "Reckless hope", 
+                "Always watching", "Compulsive fixer", "Vow of silence"
+            ],
+            issue: [
+                "Craves meaning", "Seeks the one who left", "Faith in fire", 
+                "Tainted by the past", "The thing beneath", "Marked by prophecy", 
+                "Addicted to risk", "Owes a devil's favor", "Seeks an end", 
+                "Afraid to love again"
+            ],
+            bond: [
+                "The Pact", "The Ledger", "The Iron Brand", "The Shared Burden"
+            ]
+        };
+        
+        const nameData = {
+            firstNames: {
+                male: ["Amos", "Barnaby", "Caleb", "Dalton", "Ezra", "Fletcher", "Gideon", "Hank", "Isaac", "Jebediah", "Knox", "Levi", "Moses", "Nathaniel", "Obadiah", "Preston", "Quincy", "Rufus", "Silas", "Thaddeus", "Ulysses", "Vernon", "Walter", "Xavier", "Yancy", "Zeke", "Abraham", "Buck", "Clay", "Dutch", "Elias", "Frank", "Garrett", "Homer", "Ira", "Jake", "Kit", "Luke", "Mack", "Noah"],
+                female: ["Abigail", "Beatrice", "Clara", "Dorothy", "Esther", "Florence", "Grace", "Hannah", "Iris", "Josephine", "Katherine", "Louisa", "Martha", "Nancy", "Ophelia", "Prudence", "Quinn", "Rebecca", "Sarah", "Temperance", "Ursula", "Victoria", "Winifred", "Ximena", "Yolanda", "Zelda", "Adelaide", "Belle", "Constance", "Della", "Emma", "Fanny", "Greta", "Hattie", "Ida", "Jane", "Kate", "Lucy", "Mae", "Nora"]
+            },
+            lastNames: ["Anderson", "Baker", "Campbell", "Davis", "Edwards", "Foster", "Greene", "Harrison", "Jackson", "Kennedy", "Lancaster", "Morgan", "Nelson", "O'Brien", "Parker", "Quinn", "Reynolds", "Stewart", "Thompson", "Underwood", "Vincent", "Wilson", "Young", "Zimmerman", "Abbott", "Brooks", "Carter", "Duncan", "Evans", "Ford", "Gibson", "Hayes", "Irving", "Johnson", "King", "Lewis", "Mitchell", "Norton", "Oliver", "Phillips", "Randolph", "Sullivan", "Turner", "Vaughn", "Walker", "Xavier", "York", "Zane", "Bennett", "Crawford"],
+            nicknames: {
+                male: ["Dead-Eye", "Dusty", "Iron Mike", "Lightning", "Sidewinder", "Bronco", "Cactus Jack", "Dynamite", "Eagle Eye", "Fast Draw", "Gunpowder", "Hurricane", "Idaho", "Jackhammer", "Kid", "Lawman", "Maverick", "Night Rider", "Outlaw", "Peacekeeper", "Quick Silver", "Rattlesnake", "Sagebrush", "Thunderbolt", "Undertaker", "Vigilante", "Whiskey", "X-Mark", "Yellowstone", "Zorro", "Black Hat", "Copper", "Deadwood", "El Diablo", "Firebrand", "Ghost Rider", "High Noon", "Iron Horse", "Jigger", "Killer", "Lone Wolf", "Mustang", "Nevada", "One-Shot"],
+                female: ["Angel", "Belle", "Calamity", "Desert Rose", "Empress", "Foxy", "Golden", "Hurricane", "Iron Lady", "Jewel", "Kit", "Lady Luck", "Moonbeam", "Nevada", "Opal", "Prairie Rose", "Queen", "Ruby", "Starlight", "Tempest", "Untamed", "Velvet", "Wildcat", "Xena", "Yucca", "Zephyr", "Apache", "Bandit Queen", "Cheyenne", "Diamond Lil", "Ember", "Frontier", "Goldie", "Honey", "Indian Summer", "Jade", "Kentucky", "Lightning Lil", "Midnight", "Nightshade", "Outlaw Queen", "Pistol", "Quick Draw", "Raven"]
+            }
+        };
+        
+        const equipmentTables = {
+            weapons: [
+                {name: "Revolver", damage: "1d6", range: "Close", shots: 6, slots: 1, traits: "6 shots"},
+                {name: "Lever-action rifle", damage: "1d6", range: "Medium", shots: 5, slots: 2, traits: "5 shots"},
+                {name: "Coach gun", damage: "1d6", range: "Close", shots: 2, slots: 2, traits: "AoE, 2 shots"},
+                {name: "Knife", damage: "1d4", range: "Personal", shots: 0, slots: 1, traits: "Concealable, melee"},
+                {name: "Long knife", damage: "1d6", range: "Personal", shots: 0, slots: 1, traits: "Melee only"},
+                {name: "Saber", damage: "1d6", range: "Personal", shots: 0, slots: 1, traits: "Social conflict"},
+                {name: "Tomahawk", damage: "1d6", range: "Personal", shots: 0, slots: 1, traits: "Melee, throwable"},
+                {name: "Bow & arrows", damage: "1d6", range: "Close", shots: 6, slots: 2, traits: "Silent, 6 shots"}
+            ],
+            armor: [
+                {name: "Duster coat", armor: 1, slots: 1, description: "Worn leather, oil-waxed for trail grit"},
+                {name: "Rancher's vest", armor: 2, slots: 1, description: "Thick quilted leather with metal scraps"},
+                {name: "Railhand plate", armor: 2, slots: 2, description: "Salvaged breastplate from collapsed engine"},
+                {name: "Scavver leathers", armor: 1, slots: 1, description: "Patchwork hides with wire mesh"},
+                {name: "Bone-ward fetish", armor: 0, slots: 0, description: "Charms and bones, may ward off fear"}
+            ]
+        };
+        
+        // Auto-calculate inventory and reserve
+        on('change:vigor change:load', function() {
+            getAttrs(['vigor', 'load'], function(values) {
+                const vigor = parseInt(values.vigor) || 10;
+                const load = parseInt(values.load) || 0;
+                const inventory = Math.max(vigor, 10);
+                const reserve = Math.max(inventory - load, 0);
+                
+                setAttrs({
+                    'inventory': inventory,
+                    'reserve': reserve
+                });
+            });
+        });
+        
+        // Auto-calculate load from equipment
+        on('change:repeating_weapons:weapon_slots change:repeating_gear:gear_slots change:repeating_burdens:burden_slots change:armor_slots', function() {
+            getSectionIDs('repeating_weapons', function(weaponIds) {
+                getSectionIDs('repeating_gear', function(gearIds) {
+                    getSectionIDs('repeating_burdens', function(burdenIds) {
+                        const attrs = ['armor_slots'];
+                        
+                        weaponIds.forEach(id => attrs.push(`repeating_weapons_${id}_weapon_slots`));
+                        gearIds.forEach(id => attrs.push(`repeating_gear_${id}_gear_slots`));
+                        burdenIds.forEach(id => attrs.push(`repeating_burdens_${id}_burden_slots`));
+                        
+                        getAttrs(attrs, function(values) {
+                            let totalLoad = parseInt(values.armor_slots) || 0;
+                            
+                            weaponIds.forEach(id => {
+                                totalLoad += parseInt(values[`repeating_weapons_${id}_weapon_slots`]) || 0;
+                            });
+                            
+                            gearIds.forEach(id => {
+                                totalLoad += parseInt(values[`repeating_gear_${id}_gear_slots`]) || 0;
+                            });
+                            
+                            burdenIds.forEach(id => {
+                                totalLoad += parseInt(values[`repeating_burdens_${id}_burden_slots`]) || 0;
+                            });
+                            
+                            setAttrs({'load': totalLoad});
+                        });
+                    });
+                });
+            });
+        });
+        
+        // Weapon attack with ammunition tracking
+        on('clicked:repeating_weapons:weapon_attack', function(eventInfo) {
+            const rowId = eventInfo.sourceAttribute.split('_')[2];
+            getAttrs([`repeating_weapons_${rowId}_weapon_current_shots`], function(values) {
+                const currentShots = parseInt(values[`repeating_weapons_${rowId}_weapon_current_shots`]) || 0;
+                if (currentShots > 0) {
+                    setAttrs({
+                        [`repeating_weapons_${rowId}_weapon_current_shots`]: currentShots - 1
+                    });
+                }
+            });
+        });
+        
+        // Weapon reload mechanics
+        on('clicked:repeating_weapons:weapon_reload', function(eventInfo) {
+            const rowId = eventInfo.sourceAttribute.split('_')[2];
+            getAttrs(['lead', `repeating_weapons_${rowId}_weapon_shots`, `repeating_weapons_${rowId}_weapon_current_shots`], function(values) {
+                const lead = parseInt(values.lead) || 0;
+                const maxShots = parseInt(values[`repeating_weapons_${rowId}_weapon_shots`]) || 0;
+                const currentShots = parseInt(values[`repeating_weapons_${rowId}_weapon_current_shots`]) || 0;
+                
+                if (lead > 0 && currentShots < maxShots) {
+                    setAttrs({
+                        'lead': lead - 1,
+                        [`repeating_weapons_${rowId}_weapon_current_shots`]: maxShots
+                    });
+                }
+            });
+        });
+        
+        // Characteristic tap system
+        ['background', 'reputation', 'fortitude', 'foible', 'issue', 'bond'].forEach(char => {
+            on(`clicked:tap_${char}`, function() {
+                getAttrs([`${char}_rank`, `${char}_uses`], function(values) {
+                    const rank = parseInt(values[`${char}_rank`]) || 1;
+                    const uses = parseInt(values[`${char}_uses`]) || 0;
+                    
+                    setAttrs({
+                        [`${char}_uses`]: uses + 1,
+                        [`${char}_bonus`]: rank
+                    });
+                });
+            });
+            
+            // Characteristic advancement
+            on(`clicked:advance_${char}`, function() {
+                getAttrs([`${char}_rank`, `${char}_uses`], function(values) {
+                    const rank = parseInt(values[`${char}_rank`]) || 1;
+                    const uses = parseInt(values[`${char}_uses`]) || 0;
+                    const requiredUses = rank * 10;
+                    
+                    if (uses >= requiredUses) {
+                        const advancementRoll = rollDice(1, 6);
+                        if (advancementRoll > rank) {
+                            setAttrs({
+                                [`${char}_rank`]: rank + 1,
+                                [`${char}_uses`]: 0
+                            });
+                        } else {
+                            setAttrs({
+                                [`${char}_uses`]: 0
+                            });
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Character Generation Functions
+        function generateWildWestName(gender = 'random') {
+            const selectedGender = gender === 'random' ? 
+                (Math.random() > 0.5 ? 'male' : 'female') : gender;
+            
+            const firstName = getRandomFromArray(nameData.firstNames[selectedGender]);
+            const lastName = getRandomFromArray(nameData.lastNames);
+            const nickname = getRandomFromArray(nameData.nicknames[selectedGender]);
+            
+            return {
+                firstName,
+                lastName,
+                nickname,
+                fullName: `${firstName} "${nickname}" ${lastName}`,
+                gender: selectedGender
+            };
+        }
+        
+        // Complete character generation
+        on('clicked:generate_character', function() {
+            const vigor = rollDice(3, 6);
+            const presence = rollDice(3, 6);
+            const faith = rollDice(3, 6);
+            const sand = rollDice(2, 6);
+            
+            const background = getRandomFromArray(characteristicTables.background);
+            const reputation = getRandomFromArray(characteristicTables.reputation);
+            const fortitude = getRandomFromArray(characteristicTables.fortitude);
+            const foible = getRandomFromArray(characteristicTables.foible);
+            const issue = getRandomFromArray(characteristicTables.issue);
+            const bond = getRandomFromArray(characteristicTables.bond);
+            
+            const weapon = getRandomFromArray(equipmentTables.weapons);
+            const armor = getRandomFromArray(equipmentTables.armor);
+            
+            const name = generateWildWestName();
+            const lead = rollDice(1, 4) + 1;
+            const money = rollDice(1, 6);
+            
+            setAttrs({
+                'vigor': vigor,
+                'presence': presence,
+                'faith': faith,
+                'sand': sand,
+                'sand_current': sand,
+                'character_name': name.fullName,
+                'background_name': background,
+                'reputation_name': reputation,
+                'fortitude_name': fortitude,
+                'foible_name': foible,
+                'issue_name': issue,
+                'bond_name': bond,
+                'armor_name': armor.name,
+                'armor_physical': armor.armor,
+                'armor_slots': armor.slots,
+                'armor_description': armor.description,
+                'lead': lead,
+                'money': money
+            });
+            
+            // Add weapon to repeating section
+            const weaponId = generateRowID();
+            setAttrs({
+                [`repeating_weapons_${weaponId}_weapon_name`]: weapon.name,
+                [`repeating_weapons_${weaponId}_weapon_damage`]: weapon.damage,
+                [`repeating_weapons_${weaponId}_weapon_range`]: weapon.range,
+                [`repeating_weapons_${weaponId}_weapon_shots`]: weapon.shots,
+                [`repeating_weapons_${weaponId}_weapon_current_shots`]: weapon.shots,
+                [`repeating_weapons_${weaponId}_weapon_slots`]: weapon.slots,
+                [`repeating_weapons_${weaponId}_weapon_traits`]: weapon.traits
+            });
+        });
+        
+        // Individual generation buttons
+        on('clicked:generate_attributes', function() {
+            const vigor = rollDice(3, 6);
+            const presence = rollDice(3, 6);
+            const faith = rollDice(3, 6);
+            const sand = rollDice(2, 6);
+            
+            setAttrs({
+                'vigor': vigor,
+                'presence': presence,
+                'faith': faith,
+                'sand': sand,
+                'sand_current': sand
+            });
+        });
+        
+        on('clicked:generate_characteristics', function() {
+            const background = getRandomFromArray(characteristicTables.background);
+            const reputation = getRandomFromArray(characteristicTables.reputation);
+            const fortitude = getRandomFromArray(characteristicTables.fortitude);
+            const foible = getRandomFromArray(characteristicTables.foible);
+            const issue = getRandomFromArray(characteristicTables.issue);
+            const bond = getRandomFromArray(characteristicTables.bond);
+            
+            setAttrs({
+                'background_name': background,
+                'reputation_name': reputation,
+                'fortitude_name': fortitude,
+                'foible_name': foible,
+                'issue_name': issue,
+                'bond_name': bond
+            });
+        });
+        
+        on('clicked:generate_equipment', function() {
+            const weapon = getRandomFromArray(equipmentTables.weapons);
+            const armor = getRandomFromArray(equipmentTables.armor);
+            const lead = rollDice(1, 4) + 1;
+            const money = rollDice(1, 6);
+            
+            setAttrs({
+                'armor_name': armor.name,
+                'armor_physical': armor.armor,
+                'armor_slots': armor.slots,
+                'armor_description': armor.description,
+                'lead': lead,
+                'money': money
+            });
+            
+            // Add weapon to repeating section
+            const weaponId = generateRowID();
+            setAttrs({
+                [`repeating_weapons_${weaponId}_weapon_name`]: weapon.name,
+                [`repeating_weapons_${weaponId}_weapon_damage`]: weapon.damage,
+                [`repeating_weapons_${weaponId}_weapon_range`]: weapon.range,
+                [`repeating_weapons_${weaponId}_weapon_shots`]: weapon.shots,
+                [`repeating_weapons_${weaponId}_weapon_current_shots`]: weapon.shots,
+                [`repeating_weapons_${weaponId}_weapon_slots`]: weapon.slots,
+                [`repeating_weapons_${weaponId}_weapon_traits`]: weapon.traits
+            });
+        });
+        
+        // Name generation
+        ['male', 'female', 'random'].forEach(gender => {
+            on(`clicked:generate_${gender}_name`, function() {
+                const name1 = generateWildWestName(gender === 'random' ? 'random' : gender);
+                const name2 = generateWildWestName(gender === 'random' ? 'random' : gender);
+                const name3 = generateWildWestName(gender === 'random' ? 'random' : gender);
+                
+                setAttrs({
+                    'name_suggestion_1': name1.fullName,
+                    'name_suggestion_2': name2.fullName,
+                    'name_suggestion_3': name3.fullName
+                });
+            });
+        });
+        
+        on('clicked:generate_name', function() {
+            const name = generateWildWestName();
+            setAttrs({
+                'character_name': name.fullName
+            });
+        });
+        
+        // NPC Importer
+        function addRepeating(section, attrs) {
+            const id = generateRowID();
+            const out = {};
+            Object.keys(attrs).forEach((k) => {
+                out[`repeating_${section}_${id}_${k}`] = attrs[k];
+            });
+            setAttrs(out);
+        }
+        
+        on('clicked:import_npcs', function() {
+            getAttrs(['npc_import_json'], function(values) {
+                try {
+                    const arr = JSON.parse(values.npc_import_json || '[]');
+                    if (!Array.isArray(arr)) throw new Error('JSON must be an array');
+                    arr.forEach((e) => {
+                        const a = e.attributes || {};
+                        const armor = e.armor || {};
+                        const atk = (e.attacks && e.attacks[0]) || { name: 'Attack', damage: '1d6' };
+                        addRepeating('npcs', {
+                            npc_name: e.name || 'NPC',
+                            npc_vigor: Number(a.vigor || a.Vig || 10),
+                            npc_presence: Number(a.presence || a.Pre || 10),
+                            npc_faith: Number(a.faith || a.Fth || 10),
+                            npc_sand: Number(a.sand || a.Snd || 6),
+                            npc_armor_physical: Number(armor.physical || 0),
+                            npc_armor_social: Number(armor.social || 0),
+                            npc_armor_faith: Number(armor.faith || 0),
+                            npc_attack_name: atk.name || 'Attack',
+                            npc_attack_damage: atk.damage || '1d6',
+                            npc_notes: e.notes || ''
+                        });
+                    });
+                } catch (err) {
+                    console.error('NPC import failed:', err);
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

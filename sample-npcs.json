@@ -1,0 +1,176 @@
+[
+  {
+    "name": "Bear",
+    "attributes": {
+      "vigor": 16,
+      "presence": 6,
+      "faith": 3,
+      "sand": 12
+    },
+    "attacks": [
+      {"name": "Claw", "damage": "1d6"},
+      {"name": "Bite", "damage": "1d8"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 0
+    },
+    "notes": "Large predator found in the wilderness. Territorial and aggressive when threatened.",
+    "tags": ["beast", "wilderness"]
+  },
+  {
+    "name": "The Black Dog",
+    "attributes": {
+      "vigor": 9,
+      "presence": 6,
+      "faith": 9,
+      "sand": 7
+    },
+    "attacks": [
+      {"name": "Bite", "damage": "1d6"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 2
+    },
+    "notes": "An omen of death and a relentless tracker. Who does he lead to you?",
+    "tags": ["supernatural", "omen"]
+  },
+  {
+    "name": "Jackalope",
+    "attributes": {
+      "vigor": 6,
+      "presence": 11,
+      "faith": 6,
+      "sand": 8
+    },
+    "attacks": [
+      {"name": "Faith Attack", "damage": "1d8"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 1
+    },
+    "notes": "Able to mimic human voices to lure unwary travelers into traps.",
+    "tags": ["supernatural", "trickster"]
+  },
+  {
+    "name": "Outlaw",
+    "attributes": {
+      "vigor": 7,
+      "presence": 8,
+      "faith": 6,
+      "sand": 6
+    },
+    "attacks": [
+      {"name": "Revolver", "damage": "1d6"}
+    ],
+    "armor": {
+      "physical": 1,
+      "social": 0,
+      "faith": 0
+    },
+    "notes": "Common bandit or rustler. Usually travels in groups.",
+    "tags": ["human", "criminal"]
+  },
+  {
+    "name": "Thug",
+    "attributes": {
+      "vigor": 7,
+      "presence": 7,
+      "faith": 7,
+      "sand": 6
+    },
+    "attacks": [
+      {"name": "Knife", "damage": "1d4"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 0
+    },
+    "notes": "Street tough or hired muscle. Prefers close combat.",
+    "tags": ["human", "criminal"]
+  },
+  {
+    "name": "Town Leader",
+    "attributes": {
+      "vigor": 10,
+      "presence": 11,
+      "faith": 10,
+      "sand": 6
+    },
+    "attacks": [
+      {"name": "Saber", "damage": "1d6"}
+    ],
+    "armor": {
+      "physical": 1,
+      "social": 2,
+      "faith": 0
+    },
+    "notes": "Often wields underlings and may have Social armor, or Social characteristics. A preacher may also have Acts of Faith and Faith characteristics.",
+    "tags": ["human", "authority", "leader"]
+  },
+  {
+    "name": "Skinwalker",
+    "attributes": {
+      "vigor": 7,
+      "presence": 12,
+      "faith": 12,
+      "sand": 8
+    },
+    "attacks": [
+      {"name": "Claws", "damage": "1d6"},
+      {"name": "Faith Attack", "damage": "1d8"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 3
+    },
+    "notes": "Skinwalkers often possess Faith armor fetishes and can take the shape of a wolf or coyote, perhaps others.",
+    "tags": ["supernatural", "shapeshifter"]
+  },
+  {
+    "name": "Wendigo",
+    "attributes": {
+      "vigor": 15,
+      "presence": 9,
+      "faith": 8,
+      "sand": 10
+    },
+    "attacks": [
+      {"name": "Claw", "damage": "1d8"},
+      {"name": "Claw", "damage": "1d8"}
+    ],
+    "armor": {
+      "physical": 1,
+      "social": 0,
+      "faith": 0
+    },
+    "notes": "Suggests an insatiable hunger associated with cannibalism. Extremely dangerous.",
+    "tags": ["supernatural", "horror"]
+  },
+  {
+    "name": "Will o' the Wisp",
+    "attributes": {
+      "vigor": 6,
+      "presence": 8,
+      "faith": 6,
+      "sand": 6
+    },
+    "attacks": [
+      {"name": "Touch", "damage": "1d6"}
+    ],
+    "armor": {
+      "physical": 0,
+      "social": 0,
+      "faith": 0
+    },
+    "notes": "Impossible to harm without Faith, or perhaps with cold iron or silver.",
+    "tags": ["supernatural", "spirit"]
+  }
+]
