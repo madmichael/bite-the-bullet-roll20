@@ -1,10 +1,10 @@
 {
-  "html": "bite-the-bullet.html",
-  "css": "",
-  "authors": "Jason Hobbs, madmichael",
+  "html": "bite-the-bullet-roll20.html",
+  "css": "sheet-roll20.css",
+  "authors": "Jason Hobbs - Author, Michael Spredemann - Developer",
   "roll20userid": "",
   "preview": "bite-the-bullet-preview.png",
-  "instructions": "# Bite the Bullet Character Sheet\n\nA comprehensive Roll20 character sheet for the Bite the Bullet RPG system.\n\n## Features\n\n- **Complete Character Management**: All attributes (Vigor, Presence, Faith, Sand), characteristics, and resources\n- **Automated Systems**: Ammunition tracking, reload mechanics, inventory/load calculations\n- **Character Generator**: One-click complete character generation with Wild West names\n- **Tap System**: Full implementation of characteristic tapping and advancement\n- **Acts of Faith**: Scaling faith-based actions with reserve requirements\n- **NPC Management**: JSON import system for quick NPC creation\n- **Mobile-Friendly**: Responsive design optimized for all devices\n- **Roll Templates**: Beautiful, themed roll outputs for all roll types\n\n## Quick Start\n\n1. **Generate a Character**: Use the \"Generate Complete Character\" button for instant character creation\n2. **Manual Setup**: Fill in attributes, characteristics, and equipment manually\n3. **Combat**: Use weapon attack buttons with automatic ammunition tracking\n4. **Characteristics**: Tap characteristics for bonuses and track advancement\n5. **Acts of Faith**: Use faith action buttons based on your Reserve\n\n## Character Generation\n\nThe sheet includes comprehensive character generation:\n- **Attributes**: 3d6 for Vigor/Presence/Faith, 2d6 for Sand\n- **Wild West Names**: Authentic period names with nicknames\n- **Characteristics**: Random generation from core rulebook tables\n- **Equipment**: Starting weapons, armor, and gear\n\n## Automation Features\n\n- **Ammunition Tracking**: Automatic shot counting and reload with Lead consumption\n- **Inventory Management**: Auto-calculated Load and Reserve based on equipment\n- **Characteristic System**: Tap tracking, use counting, and advancement rolls\n- **Resource Management**: Sand, Lead, Money tracking\n\n## NPC Tools\n\nGMs can import NPCs using JSON format compatible with the Foundry VTT system:\n\n```json\n[\n  {\n    \"name\": \"Bear\",\n    \"attributes\": {\"vigor\": 16, \"presence\": 6, \"faith\": 3, \"sand\": 12},\n    \"attacks\": [{\"name\": \"Claw\", \"damage\": \"1d6\"}],\n    \"armor\": {\"physical\": 0, \"social\": 0, \"faith\": 0}\n  }\n]\n```\n\n## Roll Templates\n\nThe sheet includes themed roll templates for:\n- **Damage Rolls**: Weapon attacks with ammunition display\n- **Save Rolls**: Attribute saves with tap mitigation\n- **Tap Results**: Characteristic usage and advancement tracking\n- **Acts of Faith**: Faith-based actions with success/failure states\n- **NPC Attacks**: Quick NPC combat rolls\n\n## Mobile Support\n\nFully responsive design with:\n- Touch-friendly 44px minimum button sizes\n- Single-column mobile layout\n- Optimized font sizes and spacing\n- iOS zoom prevention\n\n## Compatibility\n\nTested and optimized for:\n- Chrome, Firefox, Safari, Edge\n- iOS Safari, Android Chrome\n- Screen sizes from 320px to 1920px+\n- Roll20 Free and Pro tiers",
+  "instructions": "# Bite the Bullet Character Sheet\n\nA Roll20 character sheet for the Bite the Bullet RPG system.\n\n## Features\n\n- **Character Management**: All attributes (Vigor, Presence, Faith, Sand), characteristics, and resources\n- **Automated Systems**: Ammunition tracking, reload mechanics, inventory/load calculations\n- **Tap System**: Characteristic tapping and advancement tracking\n- **Acts of Faith**: Faith-based actions with reserve requirements\n- **Mobile-Friendly**: Responsive design optimized for all devices\n- **Roll Templates**: Themed roll outputs for all roll types\n\n## Usage\n\n1. **Manual Setup**: Fill in attributes, characteristics, and equipment\n2. **Combat**: Use weapon attack buttons with automatic ammunition tracking\n3. **Characteristics**: Tap characteristics for bonuses and track advancement\n4. **Acts of Faith**: Use faith action buttons based on your Reserve\n\n## Automation Features\n\n- **Ammunition Tracking**: Automatic shot counting and reload with Lead consumption\n- **Inventory Management**: Auto-calculated Load and Reserve based on equipment\n- **Characteristic System**: Tap tracking, use counting, and advancement rolls\n- **Resource Management**: Sand, Lead, Money tracking\n\n## Roll Templates\n\nThe sheet includes themed roll templates for:\n- **Damage Rolls**: Weapon attacks with ammunition display\n- **Save Rolls**: Attribute saves\n- **Tap Results**: Characteristic usage tracking\n- **Acts of Faith**: Faith-based actions with success/failure states\n\n## Mobile Support\n\nFully responsive design with:\n- Touch-friendly button sizes\n- Single-column mobile layout\n- Optimized font sizes and spacing\n\n## Compatibility\n\nTested and optimized for:\n- Chrome and Firefox browsers\n- Screen sizes from 320px to 1920px+\n- Roll20 Free and Pro tiers",
   "useroptions": [
     {
       "attribute": "dark_mode",
@@ -14,25 +14,11 @@
       "description": "Enable dark theme for the character sheet"
     },
     {
-      "attribute": "show_npc_section",
-      "displayname": "Show NPC Section",
-      "type": "checkbox", 
-      "value": "1",
-      "description": "Show the NPC management section (recommended for GMs)"
-    },
-    {
       "attribute": "auto_calculate_load",
       "displayname": "Auto-Calculate Load",
       "type": "checkbox",
       "value": "1", 
       "description": "Automatically calculate Load from equipment slots"
-    },
-    {
-      "attribute": "show_advancement_hints",
-      "displayname": "Show Advancement Hints",
-      "type": "checkbox",
-      "value": "1",
-      "description": "Show hints when characteristics are ready for advancement"
     }
   ],
   "legacy": false

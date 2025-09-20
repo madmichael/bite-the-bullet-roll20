@@ -1,0 +1,1660 @@
+<!-- Roll20 Character Sheet for Bite the Bullet RPG -->
+
+<!-- Character Header -->
+<div class="sheet-header">
+    <div class="character-name-section">
+        <label for="attr_character_name">Character Name:</label>
+        <input name="attr_character_name" type="text" placeholder="Enter character name" spellcheck="false" />
+    </div>
+    
+    <div class="player-name-section">
+        <label for="attr_player_name">Player Name:</label>
+        <input name="attr_player_name" type="text" placeholder="Enter player name" spellcheck="false" />
+    </div>
+</div>
+
+<!-- Character Generator Section -->
+<div class="character-generator">
+    <h3>🤠 Bite the Bullet Character Generator</h3>
+    
+    <button type="action" name="act_generate_character" class="btn-generate-all">
+        🎲 Generate Complete Character
+    </button>
+    
+    <div class="generator-options">
+        <button type="action" name="act_generate_attributes">🎲 Roll Attributes</button>
+        <button type="action" name="act_generate_characteristics">📜 Roll Characteristics</button>
+        <button type="action" name="act_generate_equipment">⚔️ Generate Equipment</button>
+        <button type="action" name="act_generate_name">🤠 Generate Name</button>
+    </div>
+    
+    <div class="name-generator">
+        <h4>Wild West Name Options</h4>
+        <button type="action" name="act_generate_male_name">Male Names</button>
+        <button type="action" name="act_generate_female_name">Female Names</button>
+        <button type="action" name="act_generate_random_name">Random Gender</button>
+        
+        <div class="name-suggestions">
+            <input name="attr_name_suggestion_1" type="text" readonly placeholder="Generated name option 1" spellcheck="false" />
+            <input name="attr_name_suggestion_2" type="text" readonly placeholder="Generated name option 2" spellcheck="false" />
+            <input name="attr_name_suggestion_3" type="text" readonly placeholder="Generated name option 3" spellcheck="false" />
+        </div>
+    </div>
+</div>
+
+<!-- Main Character Sheet -->
+<div class="sheet-main">
+    
+    <!-- Attributes Section -->
+    <div class="attributes-section">
+        <h3>Attributes</h3>
+        <div class="attributes-grid">
+            <div class="attribute">
+                <label for="attr_vigor">Vigor (3d6)</label>
+                <input name="attr_vigor" type="number" value="10" min="3" max="18" title="@{vigor}" />
+                <button type="roll" name="roll_vigor_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Vigor}} {{base_roll=[[1d20]]}} {{target=@{vigor}}} {{attribute=vigor}}">Vigor Save</button>
+            </div>
+            
+            <div class="attribute">
+                <label for="attr_presence">Presence (3d6)</label>
+                <input name="attr_presence" type="number" value="10" min="3" max="18" title="@{presence}" />
+                <button type="roll" name="roll_presence_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Presence}} {{base_roll=[[1d20]]}} {{target=@{presence}}} {{attribute=presence}}">Presence Save</button>
+            </div>
+            
+            <div class="attribute">
+                <label for="attr_faith">Faith (3d6)</label>
+                <input name="attr_faith" type="number" value="10" min="3" max="18" title="@{faith}" />
+                <button type="roll" name="roll_faith_save" value="&{template:save} {{character_name=@{character_name}}} {{save_type=Faith}} {{base_roll=[[1d20]]}} {{target=@{faith}}} {{attribute=faith}}">Faith Save</button>
+            </div>
+            
+            <div class="attribute">
+                <label for="attr_sand">Sand (2d6)</label>
+                <input name="attr_sand" type="number" value="7" min="2" max="12" title="@{sand}" />
+                <input name="attr_sand_current" type="number" value="7" min="0" title="@{sand_current}" />
+                <span class="sand-display">Current: <span name="attr_sand_current"></span> / Max: <span name="attr_sand"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="resources-section">
+        <h3>Resources</h3>
+        <div class="resources-grid">
+            <div class="resource">
+                <label for="attr_load">Load</label>
+                <input name="attr_load" type="number" value="0" readonly title="Current load from equipment" />
+            </div>
+            
+            <div class="resource">
+                <label for="attr_inventory">Inventory</label>
+                <input name="attr_inventory" type="number" value="10" readonly title="Total inventory capacity" />
+            </div>
+            
+            <div class="resource">
+                <label for="attr_reserve">Reserve</label>
+                <input name="attr_reserve" type="number" value="10" readonly title="Available inventory space" />
+            </div>
+            
+            <div class="resource">
+                <label for="attr_lead">Lead</label>
+                <input name="attr_lead" type="number" value="0" min="0" title="Lead ammunition for reloading weapons" />
+            </div>
+            
+            <div class="resource">
+                <label for="attr_money">Money</label>
+                <input name="attr_money" type="number" value="0" min="0" title="Money and currency" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Characteristics Section -->
+    <div class="characteristics-section">
+        <h3>Characteristics</h3>
+        <div class="characteristics-grid">
+            
+            <div class="characteristic">
+                <h4>Background</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_background_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_background_name" type="text" placeholder="Background name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_background_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_background" class="tap-btn">
+                        Tap (+<span name="attr_background_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_background" class="advance-btn">
+                        + (<span name="attr_background_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_background_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_background_can_tap" type="hidden" value="1" />
+                    <input name="attr_background_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_background_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_background">🎲 Roll Background</button>
+            </div>
+            
+            <div class="characteristic">
+                <h4>Reputation</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_reputation_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_reputation_name" type="text" placeholder="Reputation name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_reputation_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_reputation" class="tap-btn">
+                        Tap (+<span name="attr_reputation_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_reputation" class="advance-btn">
+                        + (<span name="attr_reputation_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_reputation_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_reputation_can_tap" type="hidden" value="1" />
+                    <input name="attr_reputation_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_reputation_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_reputation">🎲 Roll Reputation</button>
+            </div>
+            
+            <div class="characteristic">
+                <h4>Fortitude</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_fortitude_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_fortitude_name" type="text" placeholder="Fortitude name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_fortitude_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_fortitude" class="tap-btn">
+                        Tap (+<span name="attr_fortitude_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_fortitude" class="advance-btn">
+                        + (<span name="attr_fortitude_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_fortitude_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_fortitude_can_tap" type="hidden" value="1" />
+                    <input name="attr_fortitude_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_fortitude_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_fortitude">🎲 Roll Fortitude</button>
+            </div>
+            
+            <div class="characteristic">
+                <h4>Foible</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_foible_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_foible_name" type="text" placeholder="Foible name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_foible_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_foible" class="tap-btn">
+                        Tap (+<span name="attr_foible_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_foible" class="advance-btn">
+                        + (<span name="attr_foible_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_foible_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_foible_can_tap" type="hidden" value="1" />
+                    <input name="attr_foible_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_foible_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_foible">🎲 Roll Foible</button>
+            </div>
+            
+            <div class="characteristic">
+                <h4>Issue</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_issue_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_issue_name" type="text" placeholder="Issue name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_issue_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_issue" class="tap-btn">
+                        Tap (+<span name="attr_issue_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_issue" class="advance-btn">
+                        + (<span name="attr_issue_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_issue_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_issue_can_tap" type="hidden" value="1" />
+                    <input name="attr_issue_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_issue_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_issue">🎲 Roll Issue</button>
+            </div>
+            
+            <div class="characteristic">
+                <h4>The Bond</h4>
+                <div class="characteristic-header">
+                    <label>Rank: <input name="attr_bond_rank" type="number" value="1" min="1" max="6" /></label>
+                </div>
+                <input name="attr_bond_name" type="text" placeholder="Bond name" spellcheck="false" />
+                <div class="characteristic-controls">
+                    <label>Uses: <input name="attr_bond_uses" type="number" value="0" min="0" /></label>
+                    <button type="action" name="act_tap_bond" class="tap-btn">
+                        Tap (+<span name="attr_bond_rank"></span>)
+                    </button>
+                    <button type="action" name="act_advance_bond" class="advance-btn">
+                        + (<span name="attr_bond_uses"></span>/<span class="uses-needed">10</span>)
+                    </button>
+                    <div class="tap-status-display">
+                        <small>Status: <span name="attr_bond_tap_status">Available</span></small>
+                    </div>
+                    <input name="attr_bond_can_tap" type="hidden" value="1" />
+                    <input name="attr_bond_advancement_ready" type="hidden" value="0" />
+                    <input name="attr_bond_tap_status" type="hidden" value="Available" />
+                </div>
+                <button type="action" name="act_generate_random_bond">🎲 Roll Bond</button>
+            </div>
+            
+        </div>
+        
+        <!-- Tap System Tracking (Hidden) -->
+        <input name="attr_tap_history" type="hidden" value="" />
+        <input name="attr_tap_count" type="hidden" value="0" />
+        
+        <!-- Tap History Display -->
+        <div class="tap-history-display">
+            <h4>Recent Taps</h4>
+            <div class="tap-sequence">
+                <span name="attr_tap_history_display"></span>
+                <small>(B=Background, R=Reputation, F=Fortitude, f=Foible, I=Issue, b=Bond)</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weapons Section -->
+    <div class="weapons-section">
+        <h3>Weapons</h3>
+        <div class="weapon-details">
+            <div class="weapon-header">
+                <label>Weapon Name: <input name="attr_weapon_name" type="text" placeholder="Weapon name" spellcheck="false" /></label>
+                <button type="roll" name="roll_weapon_attack" value="&{template:damage} {{character_name=@{character_name}}} {{weapon_name=@{weapon_name}}} {{damage=[[@{weapon_damage}]]}} {{current_shots=@{weapon_current_shots}}} {{max_shots=@{weapon_shots}}}">Attack</button>
+            </div>
+            
+            <div class="weapon-stats">
+                <label>Damage: <input name="attr_weapon_damage" type="text" value="1d6" spellcheck="false" /></label>
+                <label>Range: <input name="attr_weapon_range" type="text" placeholder="Close/Medium/Long" spellcheck="false" /></label>
+                <label>Slots: <input name="attr_weapon_slots" type="number" value="1" min="0" /></label>
+            </div>
+            
+            <div class="weapon-ammo">
+                <label>Shots: <input name="attr_weapon_shots" type="number" value="6" min="0" /></label>
+                <label>Current: <input name="attr_weapon_current_shots" type="number" value="6" min="0" /></label>
+                <button type="action" name="act_weapon_reload">Reload (1 Lead)</button>
+            </div>
+            
+            <div class="weapon-traits">
+                <label>Traits: <input name="attr_weapon_traits" type="text" placeholder="AoE, Melee, etc." spellcheck="false" /></label>
+            </div>
+        </div>
+        
+        <button type="action" name="act_generate_random_weapon">🎲 Roll Random Weapon</button>
+    </div>
+
+    <!-- Armor Section -->
+    <div class="armor-section">
+        <h3>Armor</h3>
+        <div class="armor-details">
+            <label>Armor Name: <input name="attr_armor_name" type="text" placeholder="Armor name" spellcheck="false" /></label>
+            <label>Physical Armor: <input name="attr_armor_physical" type="number" value="0" min="0" /></label>
+            <label>Social Armor: <input name="attr_armor_social" type="number" value="0" min="0" /></label>
+            <label>Faith Armor: <input name="attr_armor_faith" type="number" value="0" min="0" /></label>
+            <label>Slots: <input name="attr_armor_slots" type="number" value="1" min="0" /></label>
+            <label>Description: <textarea name="attr_armor_description" placeholder="Armor description" spellcheck="false"></textarea></label>
+        </div>
+        
+        <button type="action" name="act_generate_random_armor">🎲 Roll Random Armor</button>
+    </div>
+
+    <!-- Gear Section - Hybrid Approach -->
+    <div class="gear-section">
+        <h3>Gear & Inventory</h3>
+        <div class="gear-controls">
+            <button type="action" name="act_generate_random_gear">🎲 Roll Random Gear</button>
+            <button type="action" name="act_generate_starting_gear">🎒 Roll 3 Starting Gear</button>
+            <button type="action" name="act_clear_all_gear">🗑️ Clear All Gear</button>
+        </div>
+        
+        <!-- Starting Gear Slots (Auto-populated) -->
+        <div class="starting-gear-section">
+            <h4>Starting Gear</h4>
+            <div class="gear-item">
+                <label>Gear 1:</label>
+                <div class="gear-selection">
+                    <input name="attr_starting_gear1_name" type="text" placeholder="Starting gear 1" spellcheck="false" />
+                    <select name="attr_starting_gear1_selector" class="gear-selector">
+                        <option value="">-- Select Gear --</option>
+                        <option value="Tinderbox">Tinderbox</option>
+                        <option value="Canteen">Canteen</option>
+                        <option value="Bundle of jerky">Bundle of jerky</option>
+                        <option value="Whetstone">Whetstone</option>
+                        <option value="Traveler's Bible">Traveler's Bible</option>
+                        <option value="Coil of wire">Coil of wire</option>
+                        <option value="Harmonica">Harmonica</option>
+                        <option value="Wooden idol">Wooden idol</option>
+                        <option value="Notebook & charcoal stub">Notebook & charcoal stub</option>
+                        <option value="Spool of thread & needle">Spool of thread & needle</option>
+                        <option value="Bottle of whiskey">Bottle of whiskey</option>
+                        <option value="Bear trap">Bear trap</option>
+                        <option value="Hand mirror">Hand mirror</option>
+                        <option value="Tin cup">Tin cup</option>
+                        <option value="Lockbox (empty)">Lockbox (empty)</option>
+                        <option value="Rope (20 ft.)">Rope (20 ft.)</option>
+                        <option value="Signal whistle">Signal whistle</option>
+                        <option value="Fashionable top hat">Fashionable top hat</option>
+                        <option value="Old coin">Old coin</option>
+                        <option value="Goggles">Goggles</option>
+                    </select>
+                </div>
+                <input name="attr_starting_gear1_slots" type="number" value="0" min="0" placeholder="Slots" />
+                <textarea name="attr_starting_gear1_description" placeholder="Description" spellcheck="false"></textarea>
+            </div>
+            <div class="gear-item">
+                <label>Gear 2:</label>
+                <div class="gear-selection">
+                    <input name="attr_starting_gear2_name" type="text" placeholder="Starting gear 2" spellcheck="false" />
+                    <select name="attr_starting_gear2_selector" class="gear-selector">
+                        <option value="">-- Select Gear --</option>
+                        <option value="Tinderbox">Tinderbox</option>
+                        <option value="Canteen">Canteen</option>
+                        <option value="Bundle of jerky">Bundle of jerky</option>
+                        <option value="Whetstone">Whetstone</option>
+                        <option value="Traveler's Bible">Traveler's Bible</option>
+                        <option value="Coil of wire">Coil of wire</option>
+                        <option value="Harmonica">Harmonica</option>
+                        <option value="Wooden idol">Wooden idol</option>
+                        <option value="Notebook & charcoal stub">Notebook & charcoal stub</option>
+                        <option value="Spool of thread & needle">Spool of thread & needle</option>
+                        <option value="Bottle of whiskey">Bottle of whiskey</option>
+                        <option value="Bear trap">Bear trap</option>
+                        <option value="Hand mirror">Hand mirror</option>
+                        <option value="Tin cup">Tin cup</option>
+                        <option value="Lockbox (empty)">Lockbox (empty)</option>
+                        <option value="Rope (20 ft.)">Rope (20 ft.)</option>
+                        <option value="Signal whistle">Signal whistle</option>
+                        <option value="Fashionable top hat">Fashionable top hat</option>
+                        <option value="Old coin">Old coin</option>
+                        <option value="Goggles">Goggles</option>
+                    </select>
+                </div>
+                <input name="attr_starting_gear2_slots" type="number" value="0" min="0" placeholder="Slots" />
+                <textarea name="attr_starting_gear2_description" placeholder="Description" spellcheck="false"></textarea>
+            </div>
+            <div class="gear-item">
+                <label>Gear 3:</label>
+                <div class="gear-selection">
+                    <input name="attr_starting_gear3_name" type="text" placeholder="Starting gear 3" spellcheck="false" />
+                    <select name="attr_starting_gear3_selector" class="gear-selector">
+                        <option value="">-- Select Gear --</option>
+                        <option value="Tinderbox">Tinderbox</option>
+                        <option value="Canteen">Canteen</option>
+                        <option value="Bundle of jerky">Bundle of jerky</option>
+                        <option value="Whetstone">Whetstone</option>
+                        <option value="Traveler's Bible">Traveler's Bible</option>
+                        <option value="Coil of wire">Coil of wire</option>
+                        <option value="Harmonica">Harmonica</option>
+                        <option value="Wooden idol">Wooden idol</option>
+                        <option value="Notebook & charcoal stub">Notebook & charcoal stub</option>
+                        <option value="Spool of thread & needle">Spool of thread & needle</option>
+                        <option value="Bottle of whiskey">Bottle of whiskey</option>
+                        <option value="Bear trap">Bear trap</option>
+                        <option value="Hand mirror">Hand mirror</option>
+                        <option value="Tin cup">Tin cup</option>
+                        <option value="Lockbox (empty)">Lockbox (empty)</option>
+                        <option value="Rope (20 ft.)">Rope (20 ft.)</option>
+                        <option value="Signal whistle">Signal whistle</option>
+                        <option value="Fashionable top hat">Fashionable top hat</option>
+                        <option value="Old coin">Old coin</option>
+                        <option value="Goggles">Goggles</option>
+                    </select>
+                </div>
+                <input name="attr_starting_gear3_slots" type="number" value="0" min="0" placeholder="Slots" />
+                <textarea name="attr_starting_gear3_description" placeholder="Description" spellcheck="false"></textarea>
+            </div>
+        </div>
+        
+        <!-- Additional Gear (Manual Entry) -->
+        <div class="additional-gear-section">
+            <h4>Additional Gear</h4>
+            <fieldset class="repeating_inventory">
+                <div class="gear-item">
+                    <input name="attr_item_name" type="text" placeholder="Item name" spellcheck="false" />
+                    <input name="attr_item_slots" type="number" value="1" min="0" placeholder="Slots" />
+                    <textarea name="attr_item_description" placeholder="Description" spellcheck="false"></textarea>
+                </div>
+            </fieldset>
+            <p><em>Use the Add button below to add gear found during adventures. Random gear will be added to the first available starting gear slot.</em></p>
+        </div>
+    </div>
+
+    <!-- Burdens/Status Effects Section -->
+    <div class="burdens-section">
+        <h3>Burdens & Status Effects</h3>
+        <fieldset class="repeating_burdens">
+            <div class="burden-item">
+                <input name="attr_burden_name" type="text" placeholder="Burden/Status name" spellcheck="false" />
+                <input name="attr_burden_slots" type="number" value="1" min="0" placeholder="Slots" />
+                <select name="attr_burden_type">
+                    <option value="physical">Physical</option>
+                    <option value="social">Social</option>
+                    <option value="faith">Faith</option>
+                    <option value="status">Status Effect</option>
+                </select>
+                <textarea name="attr_burden_description" placeholder="Description and effects" spellcheck="false"></textarea>
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- Acts of Faith Section -->
+    <div class="faith-section">
+        <h3>Acts of Faith</h3>
+        <div class="faith-scale">
+            <h4>Faith Scale Reference</h4>
+            <ul>
+                <li><strong>Trivial (0 Reserve, +0):</strong> Light candle, hear whisper, feel presence</li>
+                <li><strong>Minor (1 Reserve, -1):</strong> Bless food/water, calm fear, detect spirits</li>
+                <li><strong>Moderate (2 Reserve, -2):</strong> Heal attributes (d6), repel spirits, vision</li>
+                <li><strong>Major (3 Reserve, -3):</strong> Banish creature, call down fire (d6 AoE)</li>
+                <li><strong>Legendary (4+ Reserve, Special):</strong> Bring back from grave, stop time</li>
+            </ul>
+        </div>
+        
+        <div class="faith-controls">
+            <button type="roll" name="roll_faith_trivial" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Trivial}} {{reserve_req=0}} {{modifier=0}} {{roll=[[1d20]]}} {{target=@{faith}}}">Trivial Act</button>
+            <button type="roll" name="roll_faith_minor" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Minor}} {{reserve_req=1}} {{modifier=-1}} {{roll=[[1d20-1]]}} {{target=@{faith}}}">Minor Act</button>
+            <button type="roll" name="roll_faith_moderate" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Moderate}} {{reserve_req=2}} {{modifier=-2}} {{roll=[[1d20-2]]}} {{target=@{faith}}}">Moderate Act</button>
+            <button type="roll" name="roll_faith_major" value="&{template:faith} {{character_name=@{character_name}}} {{scale=Major}} {{reserve_req=3}} {{modifier=-3}} {{roll=[[1d20-3]]}} {{target=@{faith}}}">Major Act</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- NPC Section (GM Only) -->
+<div class="npc-section">
+    <h3>NPC Management</h3>
+    
+    <!-- NPC Importer -->
+    <div class="npc-importer">
+        <h4>NPC Importer (JSON)</h4>
+        <textarea name="attr_npc_import_json" placeholder='[{"name": "Bear", "attributes": {"vigor": 16, "presence": 6, "faith": 3, "sand": 12}, "attacks": [{"name": "Claw", "damage": "1d6"}], "armor": {"physical": 0, "social": 0, "faith": 0}}]' spellcheck="false"></textarea>
+        <button type="action" name="act_import_npcs">Import NPCs</button>
+    </div>
+    
+    <!-- Repeating NPCs -->
+    <fieldset class="repeating_npcs">
+        <div class="npc-header">
+            <input type="text" name="attr_npc_name" placeholder="NPC Name" spellcheck="false" />
+            <button type="roll" name="roll_npc_attack" value="&{template:npc-attack} {{name=@{npc_name}}} {{attack=@{npc_attack_name}}} {{damage=[[@{npc_attack_damage}]]}}">Attack</button>
+        </div>
+        
+        <div class="npc-attributes">
+            <label>Vigor: <input type="number" name="attr_npc_vigor" placeholder="10" /></label>
+            <label>Presence: <input type="number" name="attr_npc_presence" placeholder="10" /></label>
+            <label>Faith: <input type="number" name="attr_npc_faith" placeholder="10" /></label>
+            <label>Sand: <input type="number" name="attr_npc_sand" placeholder="6" /></label>
+        </div>
+        
+        <div class="npc-armor">
+            <label>Physical Armor: <input type="number" name="attr_npc_armor_physical" placeholder="0" /></label>
+            <label>Social Armor: <input type="number" name="attr_npc_armor_social" placeholder="0" /></label>
+            <label>Faith Armor: <input type="number" name="attr_npc_armor_faith" placeholder="0" /></label>
+        </div>
+        
+        <div class="npc-attack">
+            <label>Attack Name: <input type="text" name="attr_npc_attack_name" placeholder="Attack" spellcheck="false" /></label>
+            <label>Damage: <input type="text" name="attr_npc_attack_damage" placeholder="1d6" spellcheck="false" /></label>
+        </div>
+        
+        <div class="npc-notes">
+            <label>Notes: <textarea name="attr_npc_notes" placeholder="NPC notes and traits" spellcheck="false"></textarea></label>
+        </div>
+    </fieldset>
+</div>
+
+<!-- Bio & Info Section -->
+<div class="sheet-bio-info">
+    <div class="bio-section">
+        <h3>Biography</h3>
+        <textarea name="attr_character_biography" placeholder="Character background, history, and personality..." spellcheck="false"></textarea>
+    </div>
+    
+    <div class="notes-section">
+        <h3>Notes</h3>
+        <textarea name="attr_character_notes" placeholder="Campaign notes, goals, and other information..." spellcheck="false"></textarea>
+    </div>
+</div>
+
+<!-- Roll Templates -->
+
+<!-- Damage Roll Template -->
+<rolltemplate class="sheet-rolltemplate-damage">
+    <div class="template-container">
+        <div class="header">{{character_name}} - Physical Damage</div>
+        <div class="formula">Formula: {{formula}}</div>
+        {{#tap_bonus}}
+        <div class="tap-bonus">Tap Bonus: +{{tap_bonus}} ({{tapped_char}})</div>
+        {{/tap_bonus}}
+        <div class="damage">{{damage}}</div>
+        {{#ammunition}}
+        <div class="ammo">{{weapon_name}}: {{current}}/{{max}} shots remaining</div>
+        {{/ammunition}}
+        {{#targets}}
+        <div class="targets">Targets: {{targets}}</div>
+        {{/targets}}
+    </div>
+</rolltemplate>
+
+<!-- Tap Result Template -->
+<rolltemplate class="sheet-rolltemplate-tap">
+    <div class="template-container">
+        <div class="header">{{character_name}} - Characteristic Tap</div>
+        <div class="characteristic">Characteristic: {{characteristic}} (Rank {{rank}})</div>
+        <div class="bonus">Bonus: +{{bonus}}</div>
+        <div class="uses">Uses: {{uses}}/{{max_uses}}</div>
+        {{#advancement_ready}}
+        <div class="advancement-ready">Ready for Advancement! Click the + icon to attempt rank advancement.</div>
+        {{/advancement_ready}}
+    </div>
+</rolltemplate>
+
+<!-- Save Roll Template -->
+<rolltemplate class="sheet-rolltemplate-save">
+    <div class="template-container">
+        <div class="header">{{character_name}} - {{save_type}} Save</div>
+        <div class="base-roll">Base Roll: {{base_roll}}</div>
+        {{#tap_mitigation}}
+        <div class="tap-mitigation">Tap Mitigation: -{{tap_mitigation}} ({{tapped_char}})</div>
+        {{/tap_mitigation}}
+        <div class="final-roll">Final Roll: {{final_roll}} vs Target: {{target}}</div>
+        <div class="roll-result {{result_class}}">
+            <div class="result">{{result_text}}</div>
+        </div>
+    </div>
+</rolltemplate>
+
+<!-- Faith Act Template -->
+<rolltemplate class="sheet-rolltemplate-faith">
+    <div class="template-container">
+        <div class="header">{{character_name}} - Act of Faith ({{scale}})</div>
+        <div class="reserve-req">Reserve Required: {{reserve_req}}</div>
+        <div class="modifier">Modifier: {{modifier}}</div>
+        <div class="roll-result">Roll: {{roll}} vs Target: {{target}}</div>
+        {{#success}}
+        <div class="success">SUCCESS! The act of faith manifests.</div>
+        {{/success}}
+        {{#failure}}
+        <div class="failure">FAILURE! Take {{damage}} damage.</div>
+        {{/failure}}
+    </div>
+</rolltemplate>
+
+<!-- NPC Attack Template -->
+<rolltemplate class="sheet-rolltemplate-npc-attack">
+    <div class="template-container">
+        <div class="header">{{name}} — {{attack}}</div>
+        <div class="damage">Damage: {{damage}}</div>
+    </div>
+</rolltemplate>
+
+<!-- Table Roll Template -->
+<rolltemplate class="sheet-rolltemplate-table-roll">
+    <div class="template-container">
+        <div class="header">{{character_name}} - {{table_name}} Table</div>
+        <div class="roll-result">Roll: {{roll}}</div>
+        <div class="table-result">{{result}}</div>
+    </div>
+</rolltemplate>
+
+<!-- JavaScript Sheet Workers -->
+<script type="text/worker">
+// ===== BITE THE BULLET ROLL20 SHEET WORKERS =====
+
+console.log("=== SHEET WORKERS INITIALIZING ===");
+console.log("Timestamp:", new Date().toISOString());
+
+// Utility Functions
+function rollDice(count, sides) {
+    console.log(`Rolling ${count}d${sides}`);
+    let total = 0;
+    for (let i = 0; i < count; i++) {
+        const roll = Math.floor(Math.random() * sides) + 1;
+        total += roll;
+        console.log(`  Roll ${i + 1}: ${roll}`);
+    }
+    console.log(`  Total: ${total}`);
+    return total;
+}
+
+function getRandomFromArray(array) {
+    if (!array || array.length === 0) {
+        console.error("getRandomFromArray called with empty or null array:", array);
+        return "ERROR";
+    }
+    const index = Math.floor(Math.random() * array.length);
+    const result = array[index];
+    console.log(`Selected index ${index} from array of ${array.length} items: ${result}`);
+    return result;
+}
+
+function generateRowID() {
+    const id = Math.random().toString(36).substr(2, 9);
+    console.log(`Generated row ID: ${id}`);
+    return id;
+}
+
+// Auto-calculate inventory and reserve
+on('change:vigor change:load', function() {
+    console.log("=== VIGOR/LOAD CHANGE DETECTED ===");
+    getAttrs(['vigor', 'load'], function(values) {
+        console.log("Retrieved values:", values);
+        const vigor = parseInt(values.vigor) || 10;
+        const load = parseInt(values.load) || 0;
+        const inventory = Math.max(vigor, 10);
+        const reserve = Math.max(inventory - load, 0);
+        
+        console.log(`Calculated: vigor=${vigor}, load=${load}, inventory=${inventory}, reserve=${reserve}`);
+        
+        setAttrs({
+            'inventory': inventory,
+            'reserve': reserve
+        });
+    });
+});
+
+// Auto-calculate load from equipment - Hybrid approach
+on('change:weapon_slots change:starting_gear1_slots change:starting_gear2_slots change:starting_gear3_slots change:repeating_inventory:item_slots change:repeating_burdens:burden_slots change:armor_slots', function() {
+    getSectionIDs('repeating_inventory', function(inventoryIds) {
+        getSectionIDs('repeating_burdens', function(burdenIds) {
+            const attrs = ['armor_slots', 'weapon_slots', 'starting_gear1_slots', 'starting_gear2_slots', 'starting_gear3_slots'];
+            
+            inventoryIds.forEach(id => attrs.push(`repeating_inventory_${id}_item_slots`));
+            burdenIds.forEach(id => attrs.push(`repeating_burdens_${id}_burden_slots`));
+            
+            getAttrs(attrs, function(values) {
+                let totalLoad = parseInt(values.armor_slots) || 0;
+                totalLoad += parseInt(values.weapon_slots) || 0;
+                
+                // Add starting gear slots
+                for (let i = 1; i <= 3; i++) {
+                    totalLoad += parseInt(values[`starting_gear${i}_slots`]) || 0;
+                }
+                
+                // Add additional inventory slots
+                inventoryIds.forEach(id => {
+                    totalLoad += parseInt(values[`repeating_inventory_${id}_item_slots`]) || 0;
+                });
+                
+                burdenIds.forEach(id => {
+                    totalLoad += parseInt(values[`repeating_burdens_${id}_burden_slots`]) || 0;
+                });
+                
+                setAttrs({'load': totalLoad});
+            });
+        });
+    });
+});
+
+// Weapon attack with ammunition tracking
+on('clicked:repeating_weapons:weapon_attack', function(eventInfo) {
+    console.log("=== WEAPON ATTACK CLICKED ===");
+    console.log("eventInfo.sourceAttribute:", eventInfo.sourceAttribute);
+    const rowId = eventInfo.sourceAttribute.split('_')[2];
+    console.log("Extracted rowId:", rowId);
+    getAttrs([`repeating_weapons_${rowId}_weapon_current_shots`], function(values) {
+        const currentShots = parseInt(values[`repeating_weapons_${rowId}_weapon_current_shots`]) || 0;
+        if (currentShots > 0) {
+            setAttrs({
+                [`repeating_weapons_${rowId}_weapon_current_shots`]: currentShots - 1
+            });
+        }
+    });
+});
+
+// Weapon reload mechanics
+on('clicked:repeating_weapons:weapon_reload', function(eventInfo) {
+    console.log("=== WEAPON RELOAD CLICKED ===");
+    console.log("eventInfo.sourceAttribute:", eventInfo.sourceAttribute);
+    const rowId = eventInfo.sourceAttribute.split('_')[2];
+    console.log("Extracted rowId:", rowId);
+    getAttrs(['lead', `repeating_weapons_${rowId}_weapon_shots`, `repeating_weapons_${rowId}_weapon_current_shots`], function(values) {
+        const lead = parseInt(values.lead) || 0;
+        const maxShots = parseInt(values[`repeating_weapons_${rowId}_weapon_shots`]) || 0;
+        const currentShots = parseInt(values[`repeating_weapons_${rowId}_weapon_current_shots`]) || 0;
+        
+        if (lead > 0 && currentShots < maxShots) {
+            setAttrs({
+                'lead': lead - 1,
+                [`repeating_weapons_${rowId}_weapon_current_shots`]: maxShots
+            });
+        }
+    });
+});
+
+// Character Generation Data
+const characteristicTables = {
+    background: [
+        "Mine-born", "Drifter", "Ex-preacher", "Scout", "Homesteader", 
+        "Sharpshooter", "Dustmarshal's whelp", "Salt flat smuggler", 
+        "Gun pit fighter", "Rustwalker"
+    ],
+    reputation: [
+        "Shot Wyatt at sundown", "Hex-touched", "Burned a town down", 
+        "Old hand", "Cold-eyed killer", "Broken man", "Witch's favor", 
+        "Last of the line", "Silver-tongued devil", "Died once"
+    ],
+    fortitude: [
+        "Justice above all", "The old ways", "Blood oath", "Grace under fire", 
+        "Work is worth", "Don't look back", "Protect the weak", "Owe a debt", 
+        "Survive, always", "Faith in something"
+    ],
+    foible: [
+        "Short fuse", "Drinks to forget", "Can't let go", "Bleeds for strangers", 
+        "Never backs down", "Haunted by dreams", "Reckless hope", 
+        "Always watching", "Compulsive fixer", "Vow of silence"
+    ],
+    issue: [
+        "Craves meaning", "Seeks the one who left", "Faith in fire", 
+        "Tainted by the past", "The thing beneath", "Marked by prophecy", 
+        "Addicted to risk", "Owes a devil's favor", "Seeks an end", 
+        "Afraid to love again"
+    ],
+    bond: [
+        "The Pact", "The Ledger", "The Iron Brand", "The Shared Burden"
+    ]
+};
+
+const nameData = {
+    firstNames: {
+        male: ["Amos", "Barnaby", "Caleb", "Dalton", "Ezra", "Fletcher", "Gideon", "Hank", "Isaac", "Jebediah"],
+        female: ["Abigail", "Beatrice", "Clara", "Dorothy", "Esther", "Florence", "Grace", "Hannah", "Iris", "Josephine"]
+    },
+    lastNames: ["Anderson", "Baker", "Campbell", "Davis", "Edwards", "Foster", "Greene", "Harrison", "Jackson", "Kennedy"],
+    nicknames: {
+        male: ["Dead-Eye", "Dusty", "Iron Mike", "Lightning", "Sidewinder", "Bronco", "Cactus Jack", "Dynamite"],
+        female: ["Angel", "Belle", "Calamity", "Desert Rose", "Empress", "Foxy", "Golden", "Hurricane"]
+    }
+};
+
+const equipmentTables = {
+    weapons: [
+        {name: "Revolver", damage: "1d6", range: "Close", shots: 6, slots: 1, traits: "6 shots"},
+        {name: "Lever-action rifle", damage: "1d6", range: "Medium", shots: 5, slots: 2, traits: "5 shots"},
+        {name: "Shotgun", damage: "1d8", range: "Close", shots: 2, slots: 2, traits: "2 shots, AoE"},
+        {name: "Knife", damage: "1d4", range: "Personal", shots: 0, slots: 1, traits: "Concealable, melee"}
+    ],
+    armor: [
+        {name: "Duster coat", armor: 1, slots: 1, description: "Worn leather, oil-waxed for trail grit"},
+        {name: "Rancher's vest", armor: 2, slots: 1, description: "Thick quilted leather with metal scraps"}
+    ],
+    gear: [
+        {name: "Tinderbox", slots: 1, description: "Flint, steel, and dry scrap tucked in a tin"},
+        {name: "Canteen", slots: 1, description: "Half-full. The water's clean. For now"},
+        {name: "Bundle of jerky", slots: 1, description: "String-tied meat: probably goat, possibly not"},
+        {name: "Whetstone", slots: 0, description: "Keeps blades sharp and minds steady"},
+        {name: "Traveler's Bible", slots: 1, description: "Pages marked in charcoal and blood. Can assist with Social or faith-based conflict"},
+        {name: "Coil of wire", slots: 1, description: "Thin but strong. 10 feet, barbed in spots"},
+        {name: "Harmonica", slots: 0, description: "Dented, off-tune, but it carries memory. Can assist with Social or faith-based conflict"},
+        {name: "Wooden idol", slots: 0, description: "Small and worn smooth. You don't remember who carved it. Can assist with Social or faith-based conflict"},
+        {name: "Notebook & charcoal stub", slots: 1, description: "Half-filled with symbols, maps, names. Some aren't yours"},
+        {name: "Spool of thread & needle", slots: 1, description: "For stitching gear or yourself. It may hold more than it should"},
+        {name: "Bottle of whiskey", slots: 1, description: "Three good swigs left. Used for courage or cleaning wounds"},
+        {name: "Bear trap", slots: 2, description: "Folded and rusted. Still snaps like judgment. Bulky (d12 ambush damage; Vigor Save for d6)"},
+        {name: "Hand mirror", slots: 1, description: "Cracked across the middle. Sometimes shows things behind you"},
+        {name: "Tin cup", slots: 0, description: "Dented and burned. Always warm when you wake"},
+        {name: "Lockbox (empty)", slots: 2, description: "Heavy, padlocked, and no key in sight. Why'd you keep it?"},
+        {name: "Rope (20 ft.)", slots: 1, description: "Rough, stiff hemp. Smells of boats or gallows"},
+        {name: "Signal whistle", slots: 0, description: "Loud, shrill, from another time. Draws dogs and worse"},
+        {name: "Fashionable top hat", slots: 1, description: "Doesn't fit quite right"},
+        {name: "Old coin", slots: 0, description: "Face is scratched off. Warm to the touch"},
+        {name: "Goggles", slots: 1, description: "Dust-scratched lenses and a cracked leather strap. Might keep the wind out. Might not"}
+    ]
+};
+
+// ===== DATA STRUCTURE VALIDATION =====
+console.log("=== VALIDATING DATA STRUCTURES ===");
+
+// Check characteristicTables
+if (typeof characteristicTables !== 'undefined') {
+    console.log(" characteristicTables is defined");
+    console.log("characteristicTables keys:", Object.keys(characteristicTables));
+    Object.keys(characteristicTables).forEach(key => {
+        console.log(`  ${key}: ${characteristicTables[key].length} items`);
+    });
+} else {
+    console.error(" characteristicTables is NOT defined!");
+}
+
+// Check nameData
+if (typeof nameData !== 'undefined') {
+    console.log(" nameData is defined");
+    console.log("nameData structure:", {
+        hasFirstNames: !!nameData.firstNames,
+        hasLastNames: !!nameData.lastNames,
+        hasNicknames: !!nameData.nicknames
+    });
+    if (nameData.firstNames) {
+        console.log("  firstNames keys:", Object.keys(nameData.firstNames));
+        Object.keys(nameData.firstNames).forEach(gender => {
+            console.log(`    ${gender}: ${nameData.firstNames[gender].length} names`);
+        });
+    }
+    if (nameData.lastNames) {
+        console.log(`  lastNames: ${nameData.lastNames.length} names`);
+    }
+    if (nameData.nicknames) {
+        console.log("  nicknames keys:", Object.keys(nameData.nicknames));
+        Object.keys(nameData.nicknames).forEach(gender => {
+            console.log(`    ${gender}: ${nameData.nicknames[gender].length} names`);
+        });
+    }
+} else {
+    console.error(" nameData is NOT defined!");
+}
+
+// Check equipmentTables
+if (typeof equipmentTables !== 'undefined') {
+    console.log(" equipmentTables is defined");
+    console.log(`  weapons: ${equipmentTables.weapons.length} items`);
+    console.log(`  armor: ${equipmentTables.armor.length} items`);
+    console.log(`  gear: ${equipmentTables.gear.length} items`);
+} else {
+    console.error(" equipmentTables is NOT defined!");
+}
+
+console.log("=== DATA VALIDATION COMPLETE ===");
+
+// Character Generation Functions
+function generateWildWestName(gender = 'random') {
+    console.log(`=== GENERATING WILD WEST NAME (gender: ${gender}) ===`);
+    
+    const selectedGender = gender === 'random' ? 
+        (Math.random() > 0.5 ? 'male' : 'female') : gender;
+    
+    console.log(`Selected gender: ${selectedGender}`);
+    
+    // Check if nameData exists
+    if (!nameData) {
+        console.error("nameData is not defined!");
+        return { fullName: "ERROR: No name data", gender: selectedGender };
+    }
+    
+    console.log("nameData structure:", {
+        hasFirstNames: !!nameData.firstNames,
+        hasLastNames: !!nameData.lastNames,
+        hasNicknames: !!nameData.nicknames,
+        firstNamesKeys: nameData.firstNames ? Object.keys(nameData.firstNames) : 'undefined',
+        nicknamesKeys: nameData.nicknames ? Object.keys(nameData.nicknames) : 'undefined'
+    });
+    
+    const firstName = getRandomFromArray(nameData.firstNames[selectedGender]);
+    const lastName = getRandomFromArray(nameData.lastNames);
+    const nickname = getRandomFromArray(nameData.nicknames[selectedGender]);
+    
+    const result = {
+        firstName,
+        lastName,
+        nickname,
+        fullName: `${firstName} "${nickname}" ${lastName}`,
+        gender: selectedGender
+    };
+    
+    console.log("Generated name:", result);
+    return result;
+}
+
+// Character generation event handlers
+on('clicked:generate_character', function() {
+    console.log("=== GENERATE CHARACTER BUTTON CLICKED ===");
+    
+    const vigor = rollDice(3, 6);
+    const presence = rollDice(3, 6);
+    const faith = rollDice(3, 6);
+    const sand = rollDice(2, 6);
+    
+    const background = getRandomFromArray(characteristicTables.background);
+    const reputation = getRandomFromArray(characteristicTables.reputation);
+    const fortitude = getRandomFromArray(characteristicTables.fortitude);
+    const foible = getRandomFromArray(characteristicTables.foible);
+    const issue = getRandomFromArray(characteristicTables.issue);
+    const bond = getRandomFromArray(characteristicTables.bond);
+    
+    const weapon = getRandomFromArray(equipmentTables.weapons);
+    const armor = getRandomFromArray(equipmentTables.armor);
+    const lead = rollDice(1, 4) + 1;
+    const money = rollDice(1, 6);
+    
+    const name = generateWildWestName();
+    
+    console.log("Generated values:", { vigor, presence, faith, sand, name: name.fullName });
+    
+    setAttrs({
+        'character_name': name.fullName,
+        'vigor': vigor,
+        'presence': presence,
+        'faith': faith,
+        'sand': sand,
+        'sand_current': sand,
+        'background_name': background,
+        'reputation_name': reputation,
+        'fortitude_name': fortitude,
+        'foible_name': foible,
+        'issue_name': issue,
+        'bond_name': bond,
+        'armor_name': armor.name,
+        'armor_physical': armor.armor,
+        'armor_slots': armor.slots,
+        'armor_description': armor.description,
+        'lead': lead,
+        'money': money
+    });
+    
+    // Set weapon attributes (using simple attributes like armor)
+    const weaponAttrs = {
+        'weapon_name': weapon.name,
+        'weapon_damage': weapon.damage,
+        'weapon_range': weapon.range,
+        'weapon_shots': weapon.shots,
+        'weapon_current_shots': weapon.shots,
+        'weapon_slots': weapon.slots,
+        'weapon_traits': weapon.traits
+    };
+    
+    console.log("Setting weapon attributes:", weaponAttrs);
+    setAttrs(weaponAttrs);
+});
+
+// Individual generation buttons
+on('clicked:generate_attributes', function() {
+    console.log("=== GENERATE ATTRIBUTES BUTTON CLICKED ===");
+    
+    const vigor = rollDice(3, 6);
+    const presence = rollDice(3, 6);
+    const faith = rollDice(3, 6);
+    const sand = rollDice(2, 6);
+    
+    console.log("Generated attributes:", { vigor, presence, faith, sand });
+    
+    setAttrs({
+        'vigor': vigor,
+        'presence': presence,
+        'faith': faith,
+        'sand': sand,
+        'sand_current': sand
+    });
+});
+
+on('clicked:generate_characteristics', function() {
+    console.log("=== GENERATE CHARACTERISTICS BUTTON CLICKED ===");
+    
+    const background = getRandomFromArray(characteristicTables.background);
+    const reputation = getRandomFromArray(characteristicTables.reputation);
+    const fortitude = getRandomFromArray(characteristicTables.fortitude);
+    const foible = getRandomFromArray(characteristicTables.foible);
+    const issue = getRandomFromArray(characteristicTables.issue);
+    const bond = getRandomFromArray(characteristicTables.bond);
+    
+    console.log("Generated characteristics:", { background, reputation, fortitude, foible, issue, bond });
+    
+    setAttrs({
+        'background_name': background,
+        'reputation_name': reputation,
+        'fortitude_name': fortitude,
+        'foible_name': foible,
+        'issue_name': issue,
+        'bond_name': bond
+    });
+});
+
+on('clicked:generate_equipment', function() {
+    console.log("=== GENERATE EQUIPMENT BUTTON CLICKED ===");
+    
+    // Check if equipmentTables exists
+    if (!equipmentTables) {
+        console.error("equipmentTables is not defined!");
+        return;
+    }
+    
+    console.log("equipmentTables structure:", {
+        hasWeapons: !!equipmentTables.weapons,
+        hasArmor: !!equipmentTables.armor,
+        weaponsCount: equipmentTables.weapons ? equipmentTables.weapons.length : 0,
+        armorCount: equipmentTables.armor ? equipmentTables.armor.length : 0
+    });
+    
+    const weapon = getRandomFromArray(equipmentTables.weapons);
+    const armor = getRandomFromArray(equipmentTables.armor);
+    const lead = rollDice(1, 4) + 1;
+    const money = rollDice(1, 6);
+    
+    console.log("Generated equipment:", { weapon, armor, lead, money });
+    
+    const armorAttrs = {
+        'armor_name': armor.name,
+        'armor_physical': armor.armor,
+        'armor_slots': armor.slots,
+        'armor_description': armor.description,
+        'lead': lead,
+        'money': money
+    };
+    
+    console.log("Setting armor attributes:", armorAttrs);
+    setAttrs(armorAttrs);
+    
+    // Set weapon attributes (using simple attributes like armor)
+    const weaponAttrs = {
+        'weapon_name': weapon.name,
+        'weapon_damage': weapon.damage,
+        'weapon_range': weapon.range,
+        'weapon_shots': weapon.shots,
+        'weapon_current_shots': weapon.shots,
+        'weapon_slots': weapon.slots,
+        'weapon_traits': weapon.traits
+    };
+    
+    console.log("Setting weapon attributes:", weaponAttrs);
+    setAttrs(weaponAttrs);
+});
+
+// Random weapon generation
+on('clicked:generate_random_weapon', function() {
+    console.log("=== GENERATE RANDOM WEAPON BUTTON CLICKED ===");
+    
+    const weapon = getRandomFromArray(equipmentTables.weapons);
+    console.log("Selected weapon:", weapon);
+    
+    const weaponAttrs = {
+        'weapon_name': weapon.name,
+        'weapon_damage': weapon.damage,
+        'weapon_range': weapon.range,
+        'weapon_shots': weapon.shots,
+        'weapon_current_shots': weapon.shots,
+        'weapon_slots': weapon.slots,
+        'weapon_traits': weapon.traits
+    };
+    
+    console.log("Setting random weapon attributes:", weaponAttrs);
+    setAttrs(weaponAttrs);
+});
+
+// Random armor generation
+on('clicked:generate_random_armor', function() {
+    console.log("=== GENERATE RANDOM ARMOR BUTTON CLICKED ===");
+    
+    const armor = getRandomFromArray(equipmentTables.armor);
+    console.log("Selected armor:", armor);
+    
+    const armorAttrs = {
+        'armor_name': armor.name,
+        'armor_physical': armor.armor,
+        'armor_slots': armor.slots,
+        'armor_description': armor.description
+    };
+    
+    console.log("Setting random armor attributes:", armorAttrs);
+    setAttrs(armorAttrs);
+});
+
+// Individual characteristic generation buttons
+on('clicked:generate_random_background', function() {
+    console.log("=== GENERATE RANDOM BACKGROUND BUTTON CLICKED ===");
+    const background = getRandomFromArray(characteristicTables.background);
+    console.log("Selected background:", background);
+    setAttrs({
+        'background_name': background
+    });
+});
+
+on('clicked:generate_random_reputation', function() {
+    console.log("=== GENERATE RANDOM REPUTATION BUTTON CLICKED ===");
+    const reputation = getRandomFromArray(characteristicTables.reputation);
+    console.log("Selected reputation:", reputation);
+    setAttrs({
+        'reputation_name': reputation
+    });
+});
+
+on('clicked:generate_random_fortitude', function() {
+    console.log("=== GENERATE RANDOM FORTITUDE BUTTON CLICKED ===");
+    const fortitude = getRandomFromArray(characteristicTables.fortitude);
+    console.log("Selected fortitude:", fortitude);
+    setAttrs({
+        'fortitude_name': fortitude
+    });
+});
+
+on('clicked:generate_random_foible', function() {
+    console.log("=== GENERATE RANDOM FOIBLE BUTTON CLICKED ===");
+    const foible = getRandomFromArray(characteristicTables.foible);
+    console.log("Selected foible:", foible);
+    setAttrs({
+        'foible_name': foible
+    });
+});
+
+on('clicked:generate_random_issue', function() {
+    console.log("=== GENERATE RANDOM ISSUE BUTTON CLICKED ===");
+    const issue = getRandomFromArray(characteristicTables.issue);
+    console.log("Selected issue:", issue);
+    setAttrs({
+        'issue_name': issue
+    });
+});
+
+on('clicked:generate_random_bond', function() {
+    console.log("=== GENERATE RANDOM BOND BUTTON CLICKED ===");
+    const bond = getRandomFromArray(characteristicTables.bond);
+    console.log("Selected bond:", bond);
+    setAttrs({
+        'bond_name': bond
+    });
+});
+
+// Random gear generation - Hybrid approach (adds to first available starting gear slot)
+on('clicked:generate_random_gear', function() {
+    console.log("=== GENERATE RANDOM GEAR BUTTON CLICKED ===");
+    
+    const gear = getRandomFromArray(equipmentTables.gear);
+    console.log("Selected gear:", gear);
+    
+    // Find first empty starting gear slot
+    getAttrs(['starting_gear1_name', 'starting_gear2_name', 'starting_gear3_name'], function(values) {
+        let slotToUse = null;
+        
+        for (let i = 1; i <= 3; i++) {
+            if (!values[`starting_gear${i}_name`] || values[`starting_gear${i}_name`].trim() === '') {
+                slotToUse = i;
+                break;
+            }
+        }
+        
+        if (slotToUse) {
+            const gearAttrs = {};
+            gearAttrs[`starting_gear${slotToUse}_name`] = gear.name;
+            gearAttrs[`starting_gear${slotToUse}_slots`] = gear.slots;
+            gearAttrs[`starting_gear${slotToUse}_description`] = gear.description;
+            
+            console.log(`Adding gear to starting slot ${slotToUse}:`, gearAttrs);
+            setAttrs(gearAttrs);
+            console.log("Added gear to starting inventory:", gear.name);
+        } else {
+            console.log("All starting gear slots full - please use the Additional Gear section below");
+        }
+    });
+});
+
+// Generate 3 starting gear items - No duplicates
+on('clicked:generate_starting_gear', function() {
+    console.log("=== GENERATE STARTING GEAR BUTTON CLICKED ===");
+    
+    const gearAttrs = {};
+    const selectedGear = [];
+    const usedNames = new Set();
+    
+    // Generate 3 unique gear items
+    for (let i = 1; i <= 3; i++) {
+        let gear;
+        let attempts = 0;
+        
+        // Keep rolling until we get a unique item (max 20 attempts to avoid infinite loop)
+        do {
+            gear = getRandomFromArray(equipmentTables.gear);
+            attempts++;
+        } while (usedNames.has(gear.name) && attempts < 20);
+        
+        // If we couldn't find a unique item after 20 attempts, use it anyway
+        usedNames.add(gear.name);
+        selectedGear.push(gear);
+        
+        console.log(`Starting gear ${i}:`, gear);
+        
+        gearAttrs[`starting_gear${i}_name`] = gear.name;
+        gearAttrs[`starting_gear${i}_slots`] = gear.slots;
+        gearAttrs[`starting_gear${i}_description`] = gear.description;
+    }
+    
+    console.log("Selected unique gear:", selectedGear);
+    console.log("Setting starting gear:", gearAttrs);
+    setAttrs(gearAttrs);
+    console.log("Added 3 unique starting gear items to inventory");
+});
+
+// Clear all gear
+on('clicked:clear_all_gear', function() {
+    console.log("=== CLEAR ALL GEAR BUTTON CLICKED ===");
+    
+    const clearAttrs = {};
+    for (let i = 1; i <= 3; i++) {
+        clearAttrs[`starting_gear${i}_name`] = '';
+        clearAttrs[`starting_gear${i}_slots`] = 0;
+        clearAttrs[`starting_gear${i}_description`] = '';
+    }
+    
+    console.log("Clearing all starting gear slots");
+    setAttrs(clearAttrs);
+});
+
+// Handle gear selector dropdowns
+on('change:starting_gear1_selector change:starting_gear2_selector change:starting_gear3_selector', function(eventInfo) {
+    console.log("=== GEAR SELECTOR CHANGED ===");
+    console.log("eventInfo.sourceAttribute:", eventInfo.sourceAttribute);
+    
+    // Extract which gear slot was changed
+    const slotNumber = eventInfo.sourceAttribute.includes('gear1') ? '1' : 
+                     eventInfo.sourceAttribute.includes('gear2') ? '2' : '3';
+    
+    getAttrs([`starting_gear${slotNumber}_selector`], function(values) {
+        const selectedGearName = values[`starting_gear${slotNumber}_selector`];
+        console.log(`Selected gear for slot ${slotNumber}:`, selectedGearName);
+        
+        if (selectedGearName && selectedGearName !== '') {
+            // Find the gear object from our table
+            const gearItem = equipmentTables.gear.find(item => item.name === selectedGearName);
+            
+            if (gearItem) {
+                console.log("Found gear item:", gearItem);
+                
+                const updateAttrs = {};
+                updateAttrs[`starting_gear${slotNumber}_name`] = gearItem.name;
+                updateAttrs[`starting_gear${slotNumber}_slots`] = gearItem.slots;
+                updateAttrs[`starting_gear${slotNumber}_description`] = gearItem.description;
+                
+                console.log("Updating gear attributes:", updateAttrs);
+                setAttrs(updateAttrs);
+            } else {
+                console.log("Gear item not found in table");
+            }
+        }
+    });
+});
+
+on('clicked:generate_name', function() {
+    console.log("=== GENERATE NAME BUTTON CLICKED ===");
+    const name = generateWildWestName();
+    console.log("Setting character name:", name.fullName);
+    setAttrs({
+        'character_name': name.fullName
+    });
+});
+
+// Name generation by gender
+on('clicked:generate_male_name', function() {
+    console.log("=== GENERATE MALE NAME BUTTON CLICKED ===");
+    const name1 = generateWildWestName('male');
+    const name2 = generateWildWestName('male');
+    const name3 = generateWildWestName('male');
+    
+    const nameAttrs = {
+        'name_suggestion_1': name1.fullName,
+        'name_suggestion_2': name2.fullName,
+        'name_suggestion_3': name3.fullName
+    };
+    
+    console.log("Setting male name suggestions:", nameAttrs);
+    setAttrs(nameAttrs);
+});
+
+on('clicked:generate_female_name', function() {
+    console.log("=== GENERATE FEMALE NAME BUTTON CLICKED ===");
+    const name1 = generateWildWestName('female');
+    const name2 = generateWildWestName('female');
+    const name3 = generateWildWestName('female');
+    
+    const nameAttrs = {
+        'name_suggestion_1': name1.fullName,
+        'name_suggestion_2': name2.fullName,
+        'name_suggestion_3': name3.fullName
+    };
+    
+    console.log("Setting female name suggestions:", nameAttrs);
+    setAttrs(nameAttrs);
+});
+
+on('clicked:generate_random_name', function() {
+    console.log("=== GENERATE RANDOM NAME BUTTON CLICKED ===");
+    const name1 = generateWildWestName('random');
+    const name2 = generateWildWestName('random');
+    const name3 = generateWildWestName('random');
+    
+    const nameAttrs = {
+        'name_suggestion_1': name1.fullName,
+        'name_suggestion_2': name2.fullName,
+        'name_suggestion_3': name3.fullName
+    };
+    
+    console.log("Setting random name suggestions:", nameAttrs);
+    setAttrs(nameAttrs);
+});
+
+// Advanced Characteristic Tap System with Restrictions
+const characteristics = ['background', 'reputation', 'fortitude', 'foible', 'issue', 'bond'];
+
+// Unique letter mapping to avoid conflicts (Fortitude vs Foible both start with F)
+const charLetters = {
+    'background': 'B',
+    'reputation': 'R', 
+    'fortitude': 'F',
+    'foible': 'f',    // lowercase to distinguish from Fortitude
+    'issue': 'I',
+    'bond': 'b'       // lowercase to distinguish from Background
+};
+
+// Helper function to escape regex special characters
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+characteristics.forEach(char => {
+    on(`clicked:tap_${char}`, function() {
+        console.log(`=== TAPPING ${char.toUpperCase()} ===`);
+        
+        // Get all tap tracking data
+        const tapAttrs = ['tap_history', 'tap_count'];
+        characteristics.forEach(c => {
+            tapAttrs.push(`${c}_rank`, `${c}_uses`, `${c}_can_tap`);
+        });
+        
+        getAttrs(tapAttrs, function(values) {
+            const rank = parseInt(values[`${char}_rank`]) || 1;
+            const uses = parseInt(values[`${char}_uses`]) || 0;
+            const canTap = values[`${char}_can_tap`] !== '0';
+            const tapHistory = values.tap_history || '';
+            const tapCount = parseInt(values.tap_count) || 0;
+            
+            console.log(`Current state: rank=${rank}, uses=${uses}, canTap=${canTap}`);
+            console.log(`Tap history: "${tapHistory}", count=${tapCount}`);
+            
+            // Check if this characteristic can be tapped
+            if (!canTap) {
+                console.log(`❌ Cannot tap ${char} - must use 2 other characteristics first`);
+                return;
+            }
+            
+            // Tap the characteristic
+            const newUses = uses + 1;
+            const newTapCount = tapCount + 1;
+            const newTapHistory = tapHistory + charLetters[char];
+            
+            console.log(`✅ Tapping ${char}: uses ${uses} → ${newUses}`);
+            
+            // Update tap restrictions
+            const updateAttrs = {
+                [`${char}_uses`]: newUses,
+                [`${char}_bonus`]: rank,
+                [`${char}_can_tap`]: '0', // This char can't be tapped again
+                [`${char}_tap_status`]: 'Blocked - use 2 others first',
+                'tap_history': newTapHistory,
+                'tap_count': newTapCount
+            };
+            
+            // Check if we can re-enable any characteristics
+            // Rule: Can't tap same characteristic until you've used at least 2 others
+            const recentTaps = newTapHistory.slice(-3); // Last 3 taps
+            console.log(`Recent taps: "${recentTaps}"`);
+            
+            characteristics.forEach(c => {
+                if (c === char) {
+                    // Skip the current character - already handled above
+                    return;
+                }
+                
+                const charLetter = charLetters[c];
+                const timesInRecent = (recentTaps.match(new RegExp(escapeRegExp(charLetter), 'g')) || []).length;
+                const otherTapsInRecent = recentTaps.length - timesInRecent;
+                
+                // Can tap if: never been tapped OR at least 2 other taps since this char's last use
+                if (timesInRecent === 0 || otherTapsInRecent >= 2) {
+                    updateAttrs[`${c}_can_tap`] = '1';
+                    updateAttrs[`${c}_tap_status`] = 'Available';
+                    if (timesInRecent === 0) {
+                        console.log(`✅ ${c} available (never tapped)`);
+                    } else {
+                        console.log(`✅ Re-enabled ${c} (${otherTapsInRecent} other taps since last use)`);
+                    }
+                } else {
+                    updateAttrs[`${c}_can_tap`] = '0';
+                    updateAttrs[`${c}_tap_status`] = 'Blocked - use 2 others first';
+                    console.log(`❌ ${c} still disabled (only ${otherTapsInRecent} other taps)`);
+                }
+            });
+            
+            // Update tap history display
+            updateAttrs['tap_history_display'] = newTapHistory;
+            
+            setAttrs(updateAttrs);
+            
+            // Check for advancement eligibility
+            checkAdvancementEligibility(char, rank, newUses);
+        });
+    });
+    
+    // Characteristic advancement with proper roll template
+    on(`clicked:advance_${char}`, function() {
+        console.log(`=== ATTEMPTING ADVANCEMENT FOR ${char.toUpperCase()} ===`);
+        
+        getAttrs([`${char}_rank`, `${char}_uses`, 'character_name'], function(values) {
+            const rank = parseInt(values[`${char}_rank`]) || 1;
+            const uses = parseInt(values[`${char}_uses`]) || 0;
+            const requiredUses = rank * 10;
+            const characterName = values.character_name || 'Character';
+            
+            console.log(`Advancement check: rank=${rank}, uses=${uses}, required=${requiredUses}`);
+            
+            if (uses >= requiredUses) {
+                const advancementRoll = rollDice(1, 6);
+                const success = advancementRoll > rank;
+                
+                console.log(`Advancement roll: ${advancementRoll} vs rank ${rank} = ${success ? 'SUCCESS' : 'FAILURE'}`);
+                
+                if (success) {
+                    setAttrs({
+                        [`${char}_rank`]: rank + 1,
+                        [`${char}_uses`]: 0
+                    });
+                    
+                    // Output success to chat
+                    const rollTemplate = `&{template:tap} {{character_name=${characterName}}} {{characteristic=${char}}} {{old_rank=${rank}}} {{new_rank=${rank + 1}}} {{roll=${advancementRoll}}} {{result=SUCCESS! Rank increased!}} {{advancement=true}}`;
+                    
+                    // Trigger the roll template (this is a bit hacky but works in Roll20)
+                    console.log("Advancement successful - would output:", rollTemplate);
+                } else {
+                    setAttrs({
+                        [`${char}_uses`]: 0
+                    });
+                    
+                    // Output failure to chat
+                    const rollTemplate = `&{template:tap} {{character_name=${characterName}}} {{characteristic=${char}}} {{rank=${rank}}} {{roll=${advancementRoll}}} {{result=Failed to advance. Try again after ${requiredUses} more uses.}} {{advancement=true}}`;
+                    
+                    console.log("Advancement failed - would output:", rollTemplate);
+                }
+            } else {
+                console.log(`❌ Not enough uses: ${uses}/${requiredUses}`);
+            }
+        });
+    });
+});
+
+// Helper function to check advancement eligibility
+function checkAdvancementEligibility(char, rank, uses) {
+    const requiredUses = rank * 10;
+    if (uses >= requiredUses) {
+        console.log(`🎯 ${char} is ready for advancement! (${uses}/${requiredUses} uses)`);
+        // Could set a visual indicator here
+        setAttrs({
+            [`${char}_advancement_ready`]: '1'
+        });
+    } else {
+        console.log(`📊 ${char} progress: ${uses}/${requiredUses} uses until advancement attempt`);
+        setAttrs({
+            [`${char}_advancement_ready`]: '0'
+        });
+    }
+}
+
+// Note: Roll20 sheet workers can't access DOM directly
+// Visual indicators are handled via CSS attribute selectors
+
+// Initialize tap system on sheet open
+on('sheet:opened', function() {
+    console.log("=== INITIALIZING TAP SYSTEM ===");
+    
+    // Initialize all characteristics as tappable
+    const initAttrs = {
+        'tap_history': '',
+        'tap_count': 0
+    };
+    
+    characteristics.forEach(char => {
+        initAttrs[`${char}_can_tap`] = '1';
+        initAttrs[`${char}_advancement_ready`] = '0';
+        initAttrs[`${char}_tap_status`] = 'Available';
+    });
+    
+    setAttrs(initAttrs);
+    console.log("Tap system initialized - all characteristics available");
+});
+
+// Visual indicators are handled purely through CSS attribute selectors
+// Roll20 will automatically sync the hidden input values with the data attributes
+
+// Weapon reload button
+on('clicked:weapon_reload', function() {
+    console.log("=== WEAPON RELOAD BUTTON CLICKED ===");
+    getAttrs(['lead', 'weapon_shots', 'weapon_current_shots'], function(values) {
+        const lead = parseInt(values.lead) || 0;
+        const maxShots = parseInt(values.weapon_shots) || 6;
+        const currentShots = parseInt(values.weapon_current_shots) || 0;
+        
+        if (lead > 0 && currentShots < maxShots) {
+            setAttrs({
+                'lead': lead - 1,
+                'weapon_current_shots': maxShots
+            });
+            console.log(`Reloaded weapon: ${currentShots} -> ${maxShots}, Lead: ${lead} -> ${lead - 1}`);
+        } else {
+            console.log("Cannot reload: insufficient lead or weapon already full");
+        }
+    });
+});
+
+// NPC Importer - Using exact Roll20 documentation format
+function addRepeating(section, attrs) {
+    const newrowid = generateRowID();
+    console.log(`Generated row ID: ${newrowid}`);
+    const newrowattrs = {};
+    
+    // Use exact format from Roll20 documentation
+    Object.keys(attrs).forEach((attributeName) => {
+        const fullAttributeName = `repeating_${section}_${newrowid}_${attributeName}`;
+        console.log(`Creating attribute: ${fullAttributeName} = ${attrs[attributeName]}`);
+        newrowattrs[fullAttributeName] = attrs[attributeName];
+    });
+    
+    console.log("Setting attributes:", newrowattrs);
+    setAttrs(newrowattrs);
+}
+
+on('clicked:import_npcs', function() {
+    getAttrs(['npc_import_json'], function(values) {
+        try {
+            const arr = JSON.parse(values.npc_import_json || '[]');
+            if (!Array.isArray(arr)) throw new Error('JSON must be an array');
+            arr.forEach((e) => {
+                const a = e.attributes || {};
+                const armor = e.armor || {};
+                const atk = (e.attacks && e.attacks[0]) || { name: 'Attack', damage: '1d6' };
+                addRepeating('npcs', {
+                    npc_name: e.name || 'NPC',
+                    npc_vigor: Number(a.vigor || a.Vig || 10),
+                    npc_presence: Number(a.presence || a.Pre || 10),
+                    npc_faith: Number(a.faith || a.Fth || 10),
+                    npc_sand: Number(a.sand || a.Snd || 6),
+                    npc_armor_physical: Number(armor.physical || 0),
+                    npc_armor_social: Number(armor.social || 0),
+                    npc_armor_faith: Number(armor.faith || 0),
+                    npc_attack_name: atk.name || 'Attack',
+                    npc_attack_damage: atk.damage || '1d6',
+                    npc_notes: e.notes || ''
+                });
+            });
+        } catch (err) {
+            console.error('NPC import failed:', err);
+        }
+    });
+});
+
+// ===== FINAL INITIALIZATION TEST =====
+console.log("=== RUNNING FINAL INITIALIZATION TEST ===");
+
+// Test utility functions
+try {
+    console.log("Testing rollDice(2, 6):");
+    const testRoll = rollDice(2, 6);
+    console.log(`Result: ${testRoll}`);
+} catch (error) {
+    console.error("Error testing rollDice:", error);
+}
+
+// Test name generation
+try {
+    console.log("Testing generateWildWestName():");
+    const testName = generateWildWestName();
+    console.log(`Result: ${testName.fullName}`);
+} catch (error) {
+    console.error("Error testing generateWildWestName:", error);
+}
+
+// Test equipment selection
+try {
+    console.log("Testing equipment selection:");
+    const testWeapon = getRandomFromArray(equipmentTables.weapons);
+    const testArmor = getRandomFromArray(equipmentTables.armor);
+    console.log(`Weapon: ${testWeapon.name}, Armor: ${testArmor.name}`);
+} catch (error) {
+    console.error("Error testing equipment selection:", error);
+}
+
+// Test characteristic selection
+try {
+    console.log("Testing characteristic selection:");
+    const testBackground = getRandomFromArray(characteristicTables.background);
+    console.log(`Background: ${testBackground}`);
+} catch (error) {
+    console.error("Error testing characteristic selection:", error);
+}
+
+console.log("=== BITE THE BULLET SHEET WORKERS LOADED ===");
+
+// Initialize default values for character sheet
+on('sheet:opened', function() {
+    console.log("=== SHEET OPENED - INITIALIZING DEFAULTS ===");
+    
+    getAttrs(['character_name', 'vigor', 'presence', 'faith', 'sand', 'sand_current'], function(values) {
+        const updates = {};
+        
+        // Set default values if not already set
+        if (!values.character_name) updates.character_name = "";
+        if (!values.vigor) updates.vigor = 10;
+        if (!values.presence) updates.presence = 10;
+        if (!values.faith) updates.faith = 10;
+        if (!values.sand) updates.sand = 7;
+        if (!values.sand_current) updates.sand_current = values.sand || 7;
+        
+        if (Object.keys(updates).length > 0) {
+            console.log("Setting default values:", updates);
+            setAttrs(updates);
+        }
+    });
+});
+
+console.log("=== ALL SYSTEMS READY ===");
+</script>

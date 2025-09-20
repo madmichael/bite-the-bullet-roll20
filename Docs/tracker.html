@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bite the Bullet - Character Tracking Sheet</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 14px;
+            line-height: 1.3;
+            margin: 0;
+            padding: 10px;
+            background: #f8f4e6;
+            color: #2c1810;
+        }
+        
+        /* Skip link for keyboard navigation */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #8b4513;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        .tracking-sheet {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 3px solid #8b4513;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8f4e6;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8b4513;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 8px 0;
+        }
+        
+        .character-name {
+            border: none;
+            border-bottom: 2px solid #8b4513;
+            background: transparent;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            max-width: 300px;
+            padding: 4px;
+        }
+        
+        .character-name:focus {
+            outline: 2px solid #a0522d;
+            outline-offset: 2px;
+        }
+        
+        .attributes-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(139, 69, 19, 0.05);
+            border-radius: 6px;
+        }
+        
+        .attribute {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .attr-label {
+            font-weight: bold;
+            color: #8b4513;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        .attr-inputs {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .attr-input {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #8b4513;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .attr-input:focus {
+            outline: 3px solid #a0522d;
+            outline-offset: 2px;
+            border-color: #a0522d;
+        }
+        
+        .characteristics-section {
+            margin-top: 20px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b4513;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            text-align: center;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 5px;
+        }
+        
+        .characteristic-headers {
+            display: grid;
+            grid-template-columns: 1fr 80px;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+        
+        .header-label {
+            font-weight: bold;
+            color: #8b4513;
+            text-transform: uppercase;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .characteristic {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(139, 69, 19, 0.05);
+            border-radius: 6px;
+            border: 2px solid transparent;
+        }
+        
+        .characteristic:focus-within {
+            border-color: #a0522d;
+        }
+        
+        .char-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .char-name-label {
+            font-weight: bold;
+            font-size: 12px;
+            color: #8b4513;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+        
+        .rank-label {
+            font-weight: bold;
+            font-size: 12px;
+            color: #8b4513;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        
+        .char-name-input {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #8b4513;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .char-name-input:focus {
+            outline: 3px solid #a0522d;
+            outline-offset: 2px;
+            border-color: #a0522d;
+        }
+        
+        .char-rank-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .char-rank {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #8b4513;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .char-rank:focus {
+            outline: 3px solid #a0522d;
+            outline-offset: 2px;
+            border-color: #a0522d;
+        }
+        
+        .tap-tracking {
+            border: 2px solid #8b4513;
+            border-radius: 6px;
+            padding: 10px;
+            background: white;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        .rank-section {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        .rank-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .rank-legend {
+            font-size: 12px;
+            color: #8b4513;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .tap-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 3px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        .tap-checkbox {
+            width: 100%;
+            min-width: 30px;
+            max-width: 44px;
+            height: 30px;
+            appearance: none;
+            border: 2px solid #8b4513;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            aspect-ratio: 1;
+        }
+        
+        .tap-checkbox:hover {
+            background: rgba(139, 69, 19, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .tap-checkbox:focus {
+            outline: 3px solid #a0522d;
+            outline-offset: 2px;
+            border-color: #a0522d;
+        }
+        
+        .tap-checkbox:checked {
+            background: #8b4513;
+            border-color: #8b4513;
+        }
+        
+        .tap-checkbox:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .tap-checkbox:checked:focus {
+            outline-color: #f0e68c;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tap-checkbox {
+                border-width: 3px;
+            }
+            
+            .tap-checkbox:checked {
+                background: black;
+                border-color: black;
+            }
+            
+            .tracking-sheet {
+                background: white;
+                background-image: none;
+            }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .tracking-sheet {
+                padding: 10px;
+                max-width: 100%;
+            }
+            
+            .title {
+                font-size: 16px;
+            }
+            
+            .attributes-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .characteristic-headers {
+                display: none;
+            }
+            
+            .char-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .char-rank-section {
+                align-self: flex-end;
+            }
+            
+            .char-rank {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .tap-grid {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 2px;
+            }
+            
+            .tap-checkbox {
+                min-width: 25px;
+                height: 25px;
+            }
+            
+            .tap-checkbox:checked::after {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .attributes-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .tap-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 2px;
+            }
+            
+            .tap-checkbox {
+                min-width: 30px;
+                height: 30px;
+            }
+            
+            .tap-checkbox:checked::after {
+                font-size: 12px;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .tap-checkbox {
+                transition: none;
+            }
+            
+            .tap-checkbox:hover {
+                transform: none;
+            }
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #8b4513;
+        }
+        
+        .save-pdf-btn, .print-btn {
+            background: #8b4513;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            min-width: 120px;
+        }
+        
+        .save-pdf-btn:hover, .print-btn:hover {
+            background: #a0522d;
+        }
+        
+        .save-pdf-btn:focus, .print-btn:focus {
+            outline: 3px solid #f0e68c;
+            outline-offset: 2px;
+        }
+        
+        .save-pdf-btn:disabled, .print-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 480px) {
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .tracking-sheet {
+                background: white;
+                background-image: none;
+                max-width: none;
+                page-break-inside: avoid;
+            }
+            
+            .skip-link {
+                display: none;
+            }
+            
+            .action-buttons {
+                display: none;
+            }
+            
+            .tap-checkbox {
+                cursor: default;
+            }
+            
+            .tap-checkbox:hover {
+                transform: none;
+                background: white;
+            }
+            
+            .tap-checkbox:checked:hover {
+                background: #8b4513;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#characteristics" class="skip-link">Skip to characteristics tracking</a>
+    
+    <main role="main" class="tracking-sheet">
+        <header class="header">
+            <h1 class="title">Bite the Bullet</h1>
+            <label for="character-name" class="sr-only">Character Name</label>
+            <input type="text" id="character-name" class="character-name" placeholder="Character Name" aria-describedby="character-help">
+            <div id="character-help" class="sr-only">Enter your character's name</div>
+        </header>
+        
+        <section aria-labelledby="attributes-heading" class="attributes-section">
+            <h2 id="attributes-heading" class="sr-only">Character Attributes</h2>
+            
+            <div class="attribute">
+                <label for="vigor-current" class="attr-label">Vigor</label>
+                <div class="attr-inputs">
+                    <input type="number" id="vigor-current" class="attr-input" placeholder="0" aria-label="Current Vigor" min="0" max="18">
+                    <span aria-hidden="true">/</span>
+                    <input type="number" id="vigor-max" class="attr-input" placeholder="0" aria-label="Maximum Vigor" min="0" max="18">
+                </div>
+            </div>
+            
+            <div class="attribute">
+                <label for="presence-current" class="attr-label">Presence</label>
+                <div class="attr-inputs">
+                    <input type="number" id="presence-current" class="attr-input" placeholder="0" aria-label="Current Presence" min="0" max="18">
+                    <span aria-hidden="true">/</span>
+                    <input type="number" id="presence-max" class="attr-input" placeholder="0" aria-label="Maximum Presence" min="0" max="18">
+                </div>
+            </div>
+            
+            <div class="attribute">
+                <label for="faith-current" class="attr-label">Faith</label>
+                <div class="attr-inputs">
+                    <input type="number" id="faith-current" class="attr-input" placeholder="0" aria-label="Current Faith" min="0" max="18">
+                    <span aria-hidden="true">/</span>
+                    <input type="number" id="faith-max" class="attr-input" placeholder="0" aria-label="Maximum Faith" min="0" max="18">
+                </div>
+            </div>
+            
+            <div class="attribute">
+                <label for="sand-current" class="attr-label">Sand</label>
+                <div class="attr-inputs">
+                    <input type="number" id="sand-current" class="attr-input" placeholder="0" aria-label="Current Sand" min="0" max="20">
+                    <span aria-hidden="true">/</span>
+                    <input type="number" id="sand-max" class="attr-input" placeholder="0" aria-label="Maximum Sand" min="0" max="20">
+                </div>
+            </div>
+        </section>
+        
+        <section id="characteristics" aria-labelledby="characteristics-heading" class="characteristics-section">
+            <h2 id="characteristics-heading" class="section-title">Characteristics</h2>
+            
+            <div class="characteristic-headers">
+                <div class="header-label">Characteristic</div>
+                <div class="header-label">Rank</div>
+            </div>
+            
+            <div class="characteristic" role="region" aria-labelledby="background-heading">
+                <div class="char-header">
+                    <div>
+                        <h3 id="background-heading" class="char-name-label">Background</h3>
+                        <label for="background-name" class="sr-only">Background Characteristic Name</label>
+                        <input type="text" id="background-name" class="char-name-input" placeholder="Enter characteristic name (e.g., Mine-born, Drifter)" value="">
+                    </div>
+                    
+                    <div class="char-rank-section">
+                        <h4 class="rank-label">Rank</h4>
+                        <label for="background-rank" class="sr-only">Background Rank</label>
+                        <input type="number" id="background-rank" class="char-rank" min="1" max="5" value="1" aria-describedby="background-rank-help">
+                        <div id="background-rank-help" class="sr-only">Current rank of characteristic</div>
+                    </div>
+                </div>
+                
+                <fieldset class="tap-tracking">
+                    <legend class="rank-legend">Taps</legend>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Rank 1 to 2 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-1" aria-label="Background rank 1 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-2" aria-label="Background rank 1 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-3" aria-label="Background rank 1 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-4" aria-label="Background rank 1 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-5" aria-label="Background rank 1 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-6" aria-label="Background rank 1 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-7" aria-label="Background rank 1 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-8" aria-label="Background rank 1 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-9" aria-label="Background rank 1 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r1-10" aria-label="Background rank 1 tap 10">
+                        </div>
+                    </div>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Rank 2 to 3 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-1" aria-label="Background rank 2 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-2" aria-label="Background rank 2 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-3" aria-label="Background rank 2 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-4" aria-label="Background rank 2 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-5" aria-label="Background rank 2 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-6" aria-label="Background rank 2 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-7" aria-label="Background rank 2 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-8" aria-label="Background rank 2 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-9" aria-label="Background rank 2 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-10" aria-label="Background rank 2 tap 10">
+                        </div>
+                        <div class="tap-grid" role="group" aria-label="Rank 2 to 3 advancement taps continued">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-11" aria-label="Background rank 2 tap 11">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-12" aria-label="Background rank 2 tap 12">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-13" aria-label="Background rank 2 tap 13">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-14" aria-label="Background rank 2 tap 14">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-15" aria-label="Background rank 2 tap 15">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-16" aria-label="Background rank 2 tap 16">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-17" aria-label="Background rank 2 tap 17">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-18" aria-label="Background rank 2 tap 18">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-19" aria-label="Background rank 2 tap 19">
+                            <input type="checkbox" class="tap-checkbox" id="bg-r2-20" aria-label="Background rank 2 tap 20">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <!-- Reputation Characteristic -->
+            <div class="characteristic" role="region" aria-labelledby="reputation-heading">
+                <div class="char-header">
+                    <div>
+                        <h3 id="reputation-heading" class="char-name-label">Reputation</h3>
+                        <label for="reputation-name" class="sr-only">Reputation Characteristic Name</label>
+                        <input type="text" id="reputation-name" class="char-name-input" placeholder="Enter characteristic name (e.g., Shot Wyatt, Hex-touched)" value="">
+                    </div>
+                    
+                    <div class="char-rank-section">
+                        <h4 class="rank-label">Rank</h4>
+                        <label for="reputation-rank" class="sr-only">Reputation Rank</label>
+                        <input type="number" id="reputation-rank" class="char-rank" min="1" max="5" value="1">
+                    </div>
+                </div>
+                
+                <fieldset class="tap-tracking">
+                    <legend class="rank-legend">Taps</legend>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Reputation rank 1 to 2 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-1" aria-label="Reputation rank 1 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-2" aria-label="Reputation rank 1 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-3" aria-label="Reputation rank 1 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-4" aria-label="Reputation rank 1 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-5" aria-label="Reputation rank 1 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-6" aria-label="Reputation rank 1 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-7" aria-label="Reputation rank 1 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-8" aria-label="Reputation rank 1 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-9" aria-label="Reputation rank 1 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r1-10" aria-label="Reputation rank 1 tap 10">
+                        </div>
+                    </div>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Reputation rank 2 to 3 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-1" aria-label="Reputation rank 2 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-2" aria-label="Reputation rank 2 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-3" aria-label="Reputation rank 2 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-4" aria-label="Reputation rank 2 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-5" aria-label="Reputation rank 2 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-6" aria-label="Reputation rank 2 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-7" aria-label="Reputation rank 2 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-8" aria-label="Reputation rank 2 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-9" aria-label="Reputation rank 2 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-10" aria-label="Reputation rank 2 tap 10">
+                        </div>
+                        <div class="tap-grid" role="group" aria-label="Reputation rank 2 to 3 advancement taps continued">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-11" aria-label="Reputation rank 2 tap 11">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-12" aria-label="Reputation rank 2 tap 12">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-13" aria-label="Reputation rank 2 tap 13">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-14" aria-label="Reputation rank 2 tap 14">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-15" aria-label="Reputation rank 2 tap 15">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-16" aria-label="Reputation rank 2 tap 16">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-17" aria-label="Reputation rank 2 tap 17">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-18" aria-label="Reputation rank 2 tap 18">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-19" aria-label="Reputation rank 2 tap 19">
+                            <input type="checkbox" class="tap-checkbox" id="rep-r2-20" aria-label="Reputation rank 2 tap 20">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <!-- Fortitude Characteristic -->
+            <div class="characteristic" role="region" aria-labelledby="fortitude-heading">
+                <div class="char-header">
+                    <div>
+                        <h3 id="fortitude-heading" class="char-name-label">Fortitude</h3>
+                        <label for="fortitude-name" class="sr-only">Fortitude Characteristic Name</label>
+                        <input type="text" id="fortitude-name" class="char-name-input" placeholder="Enter characteristic name (e.g., Justice above all, Blood oath)" value="">
+                    </div>
+                    
+                    <div class="char-rank-section">
+                        <h4 class="rank-label">Rank</h4>
+                        <label for="fortitude-rank" class="sr-only">Fortitude Rank</label>
+                        <input type="number" id="fortitude-rank" class="char-rank" min="1" max="5" value="1">
+                    </div>
+                </div>
+                
+                <fieldset class="tap-tracking">
+                    <legend class="rank-legend">Taps</legend>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Fortitude rank 1 to 2 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-1" aria-label="Fortitude rank 1 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-2" aria-label="Fortitude rank 1 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-3" aria-label="Fortitude rank 1 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-4" aria-label="Fortitude rank 1 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-5" aria-label="Fortitude rank 1 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-6" aria-label="Fortitude rank 1 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-7" aria-label="Fortitude rank 1 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-8" aria-label="Fortitude rank 1 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-9" aria-label="Fortitude rank 1 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r1-10" aria-label="Fortitude rank 1 tap 10">
+                        </div>
+                    </div>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Fortitude rank 2 to 3 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-1" aria-label="Fortitude rank 2 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-2" aria-label="Fortitude rank 2 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-3" aria-label="Fortitude rank 2 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-4" aria-label="Fortitude rank 2 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-5" aria-label="Fortitude rank 2 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-6" aria-label="Fortitude rank 2 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-7" aria-label="Fortitude rank 2 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-8" aria-label="Fortitude rank 2 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-9" aria-label="Fortitude rank 2 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-10" aria-label="Fortitude rank 2 tap 10">
+                        </div>
+                        <div class="tap-grid" role="group" aria-label="Fortitude rank 2 to 3 advancement taps continued">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-11" aria-label="Fortitude rank 2 tap 11">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-12" aria-label="Fortitude rank 2 tap 12">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-13" aria-label="Fortitude rank 2 tap 13">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-14" aria-label="Fortitude rank 2 tap 14">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-15" aria-label="Fortitude rank 2 tap 15">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-16" aria-label="Fortitude rank 2 tap 16">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-17" aria-label="Fortitude rank 2 tap 17">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-18" aria-label="Fortitude rank 2 tap 18">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-19" aria-label="Fortitude rank 2 tap 19">
+                            <input type="checkbox" class="tap-checkbox" id="fort-r2-20" aria-label="Fortitude rank 2 tap 20">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <!-- Foible Characteristic -->
+            <div class="characteristic" role="region" aria-labelledby="foible-heading">
+                <div class="char-header">
+                    <div>
+                        <h3 id="foible-heading" class="char-name-label">Foible</h3>
+                        <label for="foible-name" class="sr-only">Foible Characteristic Name</label>
+                        <input type="text" id="foible-name" class="char-name-input" placeholder="Enter characteristic name (e.g., Short fuse, Drinks to forget)" value="">
+                    </div>
+                    
+                    <div class="char-rank-section">
+                        <h4 class="rank-label">Rank</h4>
+                        <label for="foible-rank" class="sr-only">Foible Rank</label>
+                        <input type="number" id="foible-rank" class="char-rank" min="1" max="5" value="1">
+                    </div>
+                </div>
+                
+                <fieldset class="tap-tracking">
+                    <legend class="rank-legend">Taps</legend>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Foible rank 1 to 2 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-1" aria-label="Foible rank 1 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-2" aria-label="Foible rank 1 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-3" aria-label="Foible rank 1 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-4" aria-label="Foible rank 1 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-5" aria-label="Foible rank 1 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-6" aria-label="Foible rank 1 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-7" aria-label="Foible rank 1 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-8" aria-label="Foible rank 1 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-9" aria-label="Foible rank 1 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r1-10" aria-label="Foible rank 1 tap 10">
+                        </div>
+                    </div>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Foible rank 2 to 3 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-1" aria-label="Foible rank 2 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-2" aria-label="Foible rank 2 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-3" aria-label="Foible rank 2 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-4" aria-label="Foible rank 2 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-5" aria-label="Foible rank 2 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-6" aria-label="Foible rank 2 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-7" aria-label="Foible rank 2 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-8" aria-label="Foible rank 2 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-9" aria-label="Foible rank 2 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-10" aria-label="Foible rank 2 tap 10">
+                        </div>
+                        <div class="tap-grid" role="group" aria-label="Foible rank 2 to 3 advancement taps continued">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-11" aria-label="Foible rank 2 tap 11">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-12" aria-label="Foible rank 2 tap 12">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-13" aria-label="Foible rank 2 tap 13">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-14" aria-label="Foible rank 2 tap 14">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-15" aria-label="Foible rank 2 tap 15">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-16" aria-label="Foible rank 2 tap 16">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-17" aria-label="Foible rank 2 tap 17">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-18" aria-label="Foible rank 2 tap 18">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-19" aria-label="Foible rank 2 tap 19">
+                            <input type="checkbox" class="tap-checkbox" id="foib-r2-20" aria-label="Foible rank 2 tap 20">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <!-- Issue Characteristic -->
+            <div class="characteristic" role="region" aria-labelledby="issue-heading">
+                <div class="char-header">
+                    <div>
+                        <h3 id="issue-heading" class="char-name-label">Issue</h3>
+                        <label for="issue-name" class="sr-only">Issue Characteristic Name</label>
+                        <input type="text" id="issue-name" class="char-name-input" placeholder="Enter characteristic name (e.g., Craves meaning, Seeks the one who left)" value="">
+                    </div>
+                    
+                    <div class="char-rank-section">
+                        <h4 class="rank-label">Rank</h4>
+                        <label for="issue-rank" class="sr-only">Issue Rank</label>
+                        <input type="number" id="issue-rank" class="char-rank" min="1" max="5" value="1">
+                    </div>
+                </div>
+                
+                <fieldset class="tap-tracking">
+                    <legend class="rank-legend">Taps</legend>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Issue rank 1 to 2 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-1" aria-label="Issue rank 1 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-2" aria-label="Issue rank 1 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-3" aria-label="Issue rank 1 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-4" aria-label="Issue rank 1 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-5" aria-label="Issue rank 1 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-6" aria-label="Issue rank 1 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-7" aria-label="Issue rank 1 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-8" aria-label="Issue rank 1 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-9" aria-label="Issue rank 1 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r1-10" aria-label="Issue rank 1 tap 10">
+                        </div>
+                    </div>
+                    
+                    <div class="rank-section">
+                        <div class="tap-grid" role="group" aria-label="Issue rank 2 to 3 advancement taps">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-1" aria-label="Issue rank 2 tap 1">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-2" aria-label="Issue rank 2 tap 2">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-3" aria-label="Issue rank 2 tap 3">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-4" aria-label="Issue rank 2 tap 4">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-5" aria-label="Issue rank 2 tap 5">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-6" aria-label="Issue rank 2 tap 6">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-7" aria-label="Issue rank 2 tap 7">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-8" aria-label="Issue rank 2 tap 8">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-9" aria-label="Issue rank 2 tap 9">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-10" aria-label="Issue rank 2 tap 10">
+                        </div>
+                        <div class="tap-grid" role="group" aria-label="Issue rank 2 to 3 advancement taps continued">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-11" aria-label="Issue rank 2 tap 11">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-12" aria-label="Issue rank 2 tap 12">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-13" aria-label="Issue rank 2 tap 13">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-14" aria-label="Issue rank 2 tap 14">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-15" aria-label="Issue rank 2 tap 15">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-16" aria-label="Issue rank 2 tap 16">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-17" aria-label="Issue rank 2 tap 17">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-18" aria-label="Issue rank 2 tap 18">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-19" aria-label="Issue rank 2 tap 19">
+                            <input type="checkbox" class="tap-checkbox" id="issue-r2-20" aria-label="Issue rank 2 tap 20">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </section>
+        
+        <div id="progress-announce" class="sr-only" aria-live="polite"></div>
+        
+        <div class="action-buttons">
+            <button id="save-pdf" class="save-pdf-btn" type="button">Save as PDF</button>
+            <button id="print-sheet" class="print-btn" type="button">Print Sheet</button>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Progress tracking (simplified without progress displays)
+        function updateProgress(characteristic, rank) {
+            const checkboxes = document.querySelectorAll(`input[id^="${characteristic}-r${rank}-"]:checked`);
+            const total = rank === '1' ? 10 : 20;
+            const count = checkboxes.length;
+            const announceEl = document.getElementById('progress-announce');
+            
+            // Only announce milestone progress
+            if (count === total) {
+                announceEl.textContent = `${characteristic} rank ${rank} advancement complete! All ${total} taps filled.`;
+            } else if (count > 0 && count % 10 === 0) {
+                announceEl.textContent = `${characteristic} rank ${rank}: ${count} of ${total} taps completed`;
+            }
+        }
+        
+        // Handle checkbox interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.tap-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Extract characteristic and rank from ID
+                    const match = this.id.match(/^(\w+)-r(\d+)-\d+$/);
+                    if (match) {
+                        const [, characteristic, rank] = match;
+                        updateProgress(characteristic, rank);
+                        
+                        // Save state to localStorage
+                        if (this.checked) {
+                            localStorage.setItem(`bite-bullet-${this.id}`, 'true');
+                        } else {
+                            localStorage.removeItem(`bite-bullet-${this.id}`);
+                        }
+                    }
+                });
+                
+                // Load saved state
+                if (localStorage.getItem(`bite-bullet-${checkbox.id}`) === 'true') {
+                    checkbox.checked = true;
+                }
+            });
+            
+            // Initialize progress displays
+            const characteristics = ['bg', 'rep', 'fort', 'foib', 'issue'];
+            characteristics.forEach(char => {
+                updateProgress(char, '1');
+                updateProgress(char, '2');
+            });
+        });
+        
+        // Save and load form data
+        document.addEventListener('input', function(e) {
+            if (e.target.type === 'text' || e.target.type === 'number') {
+                localStorage.setItem(`bite-bullet-${e.target.id}`, e.target.value);
+            }
+        });
+        
+        window.addEventListener('load', function() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
+            inputs.forEach(input => {
+                const saved = localStorage.getItem(`bite-bullet-${input.id}`);
+                if (saved) {
+                    input.value = saved;
+                }
+            });
+        });
+        
+        // Keyboard navigation enhancements
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('tap-checkbox')) {
+                // Allow space and enter to toggle checkboxes
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    e.target.checked = !e.target.checked;
+                    e.target.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+        
+        // PDF generation functionality with interactive forms
+        document.getElementById('save-pdf').addEventListener('click', async function() {
+            const button = this;
+            const originalText = button.textContent;
+            
+            try {
+                button.disabled = true;
+                button.textContent = 'Generating PDF...';
+                
+                // Get character name for filename
+                const characterName = document.getElementById('character-name').value || 'Character';
+                const filename = `${characterName.replace(/[^a-zA-Z0-9]/g, '_')}_tracking_sheet.pdf`;
+                
+                // Create PDF with form fields
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Page dimensions
+                const pageWidth = 210;
+                const pageHeight = 297;
+                const margin = 15;
+                const contentWidth = pageWidth - (2 * margin);
+                
+                // Title
+                pdf.setFontSize(18);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(139, 69, 19);
+                pdf.text('BITE THE BULLET', pageWidth / 2, 25, { align: 'center' });
+                
+                // Character name field
+                pdf.setFontSize(12);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setTextColor(0, 0, 0);
+                pdf.text('Character Name:', margin, 40);
+                
+                // Add text field for character name
+                const charNameField = new pdf.AcroFormTextField();
+                charNameField.fieldName = 'character_name';
+                charNameField.Rect = [margin + 35, 35, contentWidth - 35, 8];
+                charNameField.value = ''; // Always blank for print version
+                charNameField.fontSize = 12;
+                pdf.addField(charNameField);
+                
+                // Draw line under character name
+                pdf.setDrawColor(139, 69, 19);
+                pdf.line(margin + 35, 43, pageWidth - margin, 43);
+                
+                // Attributes section
+                let yPos = 55;
+                pdf.setFontSize(10);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(139, 69, 19);
+                
+                const attributes = [
+                    { label: 'VIGOR', id: 'vigor' },
+                    { label: 'PRESENCE', id: 'presence' },
+                    { label: 'FAITH', id: 'faith' },
+                    { label: 'SAND', id: 'sand' }
+                ];
+                
+                const attrWidth = contentWidth / 4;
+                attributes.forEach((attr, index) => {
+                    const xPos = margin + (index * attrWidth);
+                    pdf.text(attr.label, xPos + (attrWidth / 2), yPos, { align: 'center' });
+                    
+                    // Current value field
+                    const currentField = new pdf.AcroFormTextField();
+                    currentField.fieldName = `${attr.id}_current`;
+                    currentField.Rect = [xPos + 5, yPos + 2, 15, 8];
+                    currentField.value = ''; // Always blank for print version
+                    currentField.fontSize = 10;
+                    currentField.textAlign = 'center';
+                    pdf.addField(currentField);
+                    
+                    // Slash
+                    pdf.setTextColor(0, 0, 0);
+                    pdf.text('/', xPos + 23, yPos + 8);
+                    
+                    // Max value field
+                    const maxField = new pdf.AcroFormTextField();
+                    maxField.fieldName = `${attr.id}_max`;
+                    maxField.Rect = [xPos + 26, yPos + 2, 15, 8];
+                    maxField.value = ''; // Always blank for print version
+                    maxField.fontSize = 10;
+                    maxField.textAlign = 'center';
+                    pdf.addField(maxField);
+                });
+                
+                // Characteristics section
+                yPos = 80;
+                pdf.setFontSize(14);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(139, 69, 19);
+                pdf.text('CHARACTERISTICS', pageWidth / 2, yPos, { align: 'center' });
+                
+                // Draw line under characteristics title
+                pdf.line(margin, yPos + 2, pageWidth - margin, yPos + 2);
+                
+                yPos += 15;
+                
+                // Characteristics
+                const characteristics = [
+                    { name: 'Background', id: 'background' },
+                    { name: 'Reputation', id: 'reputation' },
+                    { name: 'Fortitude', id: 'fortitude' },
+                    { name: 'Foible', id: 'foible' },
+                    { name: 'Issue', id: 'issue' }
+                ];
+                
+                characteristics.forEach((char, charIndex) => {
+                    // Characteristic name label
+                    pdf.setFontSize(10);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setTextColor(139, 69, 19);
+                    pdf.text(char.name, margin, yPos);
+                    
+                    // Rank label
+                    pdf.text('Rank', pageWidth - margin - 20, yPos, { align: 'center' });
+                    
+                    yPos += 5;
+                    
+                    // Characteristic name field
+                    const nameField = new pdf.AcroFormTextField();
+                    nameField.fieldName = `${char.id}_name`;
+                    nameField.Rect = [margin, yPos, contentWidth - 30, 8];
+                    nameField.value = ''; // Always blank for print version
+                    nameField.fontSize = 10;
+                    pdf.addField(nameField);
+                    
+                    // Rank field
+                    const rankField = new pdf.AcroFormTextField();
+                    rankField.fieldName = `${char.id}_rank`;
+                    rankField.Rect = [pageWidth - margin - 20, yPos, 15, 8];
+                    rankField.value = ''; // Always blank for print version
+                    rankField.fontSize = 10;
+                    rankField.textAlign = 'center';
+                    pdf.addField(rankField);
+                    
+                    yPos += 12;
+                    
+                    // Taps label
+                    pdf.setFontSize(8);
+                    pdf.setTextColor(139, 69, 19);
+                    pdf.text('Taps', pageWidth / 2, yPos, { align: 'center' });
+                    
+                    yPos += 3;
+                    
+                    // Rank 1 taps (10 boxes)
+                    const boxSize = 6;
+                    const spacing = 2;
+                    const totalWidth = (10 * boxSize) + (9 * spacing);
+                    const startX = (pageWidth - totalWidth) / 2;
+                    
+                    for (let i = 1; i <= 10; i++) {
+                        const boxX = startX + ((i - 1) * (boxSize + spacing));
+                        const checkbox = new pdf.AcroFormCheckBox();
+                        checkbox.fieldName = `${char.id}_r1_${i}`;
+                        checkbox.Rect = [boxX, yPos, boxSize, boxSize];
+                        checkbox.value = 'Off'; // Always unchecked for print version
+                        pdf.addField(checkbox);
+                    }
+                    
+                    yPos += boxSize + 3;
+                    
+                    // Rank 2 taps (20 boxes in 2 rows)
+                    for (let row = 0; row < 2; row++) {
+                        for (let i = 1; i <= 10; i++) {
+                            const boxX = startX + ((i - 1) * (boxSize + spacing));
+                            const tapNumber = (row * 10) + i;
+                            const checkbox = new pdf.AcroFormCheckBox();
+                            checkbox.fieldName = `${char.id}_r2_${tapNumber}`;
+                            checkbox.Rect = [boxX, yPos, boxSize, boxSize];
+                            checkbox.value = 'Off'; // Always unchecked for print version
+                            pdf.addField(checkbox);
+                        }
+                        yPos += boxSize + 2;
+                    }
+                    
+                    yPos += 8;
+                });
+                
+                // Add timestamp
+                const now = new Date();
+                const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+                pdf.setFontSize(6);
+                pdf.setTextColor(128, 128, 128);
+                pdf.text(`Generated: ${timestamp}`, margin, pageHeight - 5);
+                
+                // Save the PDF
+                pdf.save(filename);
+                
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('Error generating PDF. Please try again or use the print option.');
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        });
+        
+        // Print functionality
+        document.getElementById('print-sheet').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // Enhanced save/load for export/import
+        function exportData() {
+            const data = {};
+            
+            // Get all form inputs
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    data[input.id] = input.checked;
+                } else {
+                    data[input.id] = input.value;
+                }
+            });
+            
+            return JSON.stringify(data, null, 2);
+        }
+        
+        function importData(jsonString) {
+            try {
+                const data = JSON.parse(jsonString);
+                
+                Object.keys(data).forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = data[id];
+                            element.dispatchEvent(new Event('change'));
+                        } else {
+                            element.value = data[id];
+                        }
+                    }
+                });
+                
+                // Update progress displays
+                const characteristics = ['bg', 'rep', 'fort', 'foib', 'issue'];
+                characteristics.forEach(char => {
+                    updateProgress(char, '1');
+                    updateProgress(char, '2');
+                });
+                
+                return true;
+            } catch (error) {
+                console.error('Error importing data:', error);
+                return false;
+            }
+        }
+        
+        // Add export/import to global scope for potential future use
+        window.biteBulletTracker = {
+            exportData,
+            importData
+        };
+    </script>
+</body>
+</html>

@@ -201,7 +201,7 @@ This project maintains parity with the FoundryVTT system. When contributing:
 
 ## 📄 License
 
-This character sheet is designed for use with the Bite the Bullet RPG system by Jason Hobbs.
+This character sheet is designed for use with the Bite the Bullet RPG system by Jason Hobbs and this Roll20 character sheet was created by Michael Spredemann.
 
 ## 🔗 Related Projects
 
